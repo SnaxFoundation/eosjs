@@ -3,7 +3,7 @@
  */
 // copyright defined in snaxjs/LICENSE.txt
 
-import * as ecc from "snaxjs-ecc";
+import * as ecc from "@snaxfoundation/snaxjs-ecc";
 import { SignatureProvider, SignatureProviderArgs } from "./snaxjs-api-interfaces";
 import { convertLegacyPublicKey } from "./snaxjs-numeric";
 
