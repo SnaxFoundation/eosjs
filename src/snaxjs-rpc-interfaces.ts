@@ -1,4 +1,4 @@
-// copyright defined in eosjs/LICENSE.txt
+// copyright defined in snaxjs/LICENSE.txt
 
 /** Structured format for abis */
 export interface Abi {

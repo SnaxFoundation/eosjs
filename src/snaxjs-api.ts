@@ -1,12 +1,12 @@
 /**
  * @module API
  */
-// copyright defined in eosjs/LICENSE.txt
+// copyright defined in snaxjs/LICENSE.txt
 
-import { AbiProvider, AuthorityProvider, BinaryAbi, CachedAbi, SignatureProvider } from "./eosjs-api-interfaces";
-import JsonRpc from "./eosjs-jsonrpc";
-import { Abi, GetInfoResult, PushTransactionArgs } from "./eosjs-rpc-interfaces";
-import * as ser from "./eosjs-serialize";
+import { AbiProvider, AuthorityProvider, BinaryAbi, CachedAbi, SignatureProvider } from "./snaxjs-api-interfaces";
+import JsonRpc from "./snaxjs-jsonrpc";
+import { Abi, GetInfoResult, PushTransactionArgs } from "./snaxjs-rpc-interfaces";
+import * as ser from "./snaxjs-serialize";
 
 // tslint:disable-next-line
 const abiAbi = require('../src/abi.abi.json');

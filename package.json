@@ -1,7 +1,7 @@
 {
-  "name": "eosjs",
+  "name": "snaxjs",
   "version": "20.0.0-beta2",
-  "description": "Talk to eos API",
+  "description": "Talk to snax API",
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "npm run build",
@@ -16,16 +16,16 @@
     "docs-serve": "python -m SimpleHTTPServer",
     "docs-publish": "sh .docs/scripts/publish.sh"
   },
-  "author": "block.one",
+  "author": "SnaxFoundation",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EOSIO/eosjs.git"
+    "url": "https://github.com/SnaxFoundation/snaxjs.git"
   },
   "dependencies": {
+    "@snaxfoundation/snaxjs-ecc": "^4.0.4",
     "@types/jest": "^23.3.1",
     "babel-polyfill": "^6.26.0",
-    "eosjs-ecc": "^4.0.1",
     "text-encoding": "^0.6.4"
   },
   "devDependencies": {

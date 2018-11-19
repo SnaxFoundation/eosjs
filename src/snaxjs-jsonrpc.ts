@@ -1,12 +1,12 @@
 /**
  * @module JSON-RPC
  */
-// copyright defined in eosjs/LICENSE.txt
+// copyright defined in snaxjs/LICENSE.txt
 
-import { AbiProvider, AuthorityProvider, AuthorityProviderArgs, BinaryAbi } from "./eosjs-api-interfaces";
-import { base64ToBinary, convertLegacyPublicKeys } from "./eosjs-numeric";
-import { GetAbiResult, GetBlockResult, GetCodeResult, GetInfoResult, GetRawCodeAndAbiResult, PushTransactionArgs } from "./eosjs-rpc-interfaces"; // tslint:disable-line
-import RpcError from "./eosjs-rpcerror";
+import { AbiProvider, AuthorityProvider, AuthorityProviderArgs, BinaryAbi } from "./snaxjs-api-interfaces";
+import { base64ToBinary, convertLegacyPublicKeys } from "./snaxjs-numeric";
+import { GetAbiResult, GetBlockResult, GetCodeResult, GetInfoResult, GetRawCodeAndAbiResult, PushTransactionArgs } from "./snaxjs-rpc-interfaces"; // tslint:disable-line
+import RpcError from "./snaxjs-rpcerror";
 
 function arrayToHex(data: Uint8Array) {
     let result = "";

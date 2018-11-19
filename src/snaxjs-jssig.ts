@@ -1,11 +1,11 @@
 /**
  * @module JS-Sig
  */
-// copyright defined in eosjs/LICENSE.txt
+// copyright defined in snaxjs/LICENSE.txt
 
-import * as ecc from "eosjs-ecc";
-import { SignatureProvider, SignatureProviderArgs } from "./eosjs-api-interfaces";
-import { convertLegacyPublicKey } from "./eosjs-numeric";
+import * as ecc from "snaxjs-ecc";
+import { SignatureProvider, SignatureProviderArgs } from "./snaxjs-api-interfaces";
+import { convertLegacyPublicKey } from "./snaxjs-numeric";
 
 /** Signs transactions using in-process private keys */
 export default class JsSignatureProvider implements SignatureProvider {

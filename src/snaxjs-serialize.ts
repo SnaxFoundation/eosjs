@@ -1,10 +1,10 @@
 /**
  * @module Serialize
  */
-// copyright defined in eosjs/LICENSE.txt
+// copyright defined in snaxjs/LICENSE.txt
 
-import * as numeric from "./eosjs-numeric";
-import { Abi, BlockTaposInfo } from "./eosjs-rpc-interfaces";
+import * as numeric from "./snaxjs-numeric";
+import { Abi, BlockTaposInfo } from "./snaxjs-rpc-interfaces";
 
 /** A field in an abi */
 export interface Field {
@@ -516,7 +516,7 @@ export class SerialBuffer {
 
 /** Is this a supported ABI version? */
 export function supportedAbiVersion(version: string) {
-    return version.startsWith("eosio::abi/1.");
+    return version.startsWith("snax::abi/1.");
 }
 
 function checkDateParse(date: string) {

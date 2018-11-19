@@ -1,18 +1,18 @@
-⚠️ ***Important! We recently released a major breaking rewrite for eosjs. Be sure to lock your dependencies.*** ⚠️
+⚠️ ***Important! We recently released a major breaking rewrite for snaxjs. Be sure to lock your dependencies.*** ⚠️
 
-If you are looking for the the previous version of `eosjs` you can [find it here](https://github.com/EOSIO/eosjs/tree/v16.0.9).
+If you are looking for the the previous version of `snaxjs` you can [find it here](https://github.com/SNAX/snaxjs/tree/v16.0.9).
 
-# eosjs
+# snaxjs
 
-Javascript API for integration with EOSIO-based blockchains using [EOSIO RPC API](https://developers.eos.io/eosio-nodeos/reference).
+Javascript API for integration with SNAX-based blockchains using [SNAX RPC API](https://developers.snax/snax-snaxnode/reference).
 
-Documentation can be found [here](https://eosio.github.io/eosjs)
+Documentation can be found [here](https://snax.github.io/snaxjs)
 
 ## Installation
 
 ### NodeJS
 
-`npm install eosjs@beta`
+`npm install snaxjs@beta`
 
 ## Basic Usage
 
@@ -20,14 +20,14 @@ Documentation can be found [here](https://eosio.github.io/eosjs)
 
 Importing using ES6 module syntax in the browser is supported if you have a transpiler, such as Babel.
 ```js
-import { Api, JsonRpc, RpcError, JsSignatureProvider } from 'eosjs';
+import { Api, JsonRpc, RpcError, JsSignatureProvider } from 'snaxjs';
 ```
 
 ### NodeJS
 
 Importing using commonJS syntax is supported by node out of the box.
 ```js
-const { Api, JsonRpc, RpcError, JsSignatureProvider } = require('eosjs');
+const { Api, JsonRpc, RpcError, JsSignatureProvider } = require('snaxjs');
 const fetch = require('node-fetch');                            // node only; not needed in browsers
 const { TextDecoder, TextEncoder } = require('text-encoding');  // node, IE11 and IE Edge Browsers
 ```
@@ -63,7 +63,7 @@ const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), te
 (async () => {
   const result = await api.transact({
     actions: [{
-      account: 'eosio.token',
+      account: 'snax.token',
       name: 'transfer',
       authorization: [{
         actor: 'useraaaaaaaa',
@@ -72,7 +72,7 @@ const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), te
       data: {
         from: 'useraaaaaaaa',
         to: 'useraaaaaaab',
-        quantity: '0.0001 SYS',
+        quantity: '0.0001 SNAX',
         memo: '',
       },
     }]
@@ -102,7 +102,7 @@ try {
 
 ## Browsers
 
-After running `npm run build-web` or `yarn build-web`, the browser distribution will be located in `dist`. For full browser usage examples, [see the documentation](https://eosio.github.io/eosjs/static/3.-Browsers.html).
+After running `npm run build-web` or `yarn build-web`, the browser distribution will be located in `dist`. For full browser usage examples, [see the documentation](https://snax.github.io/snaxjs/static/3.-Browsers.html).
 
 ## How it works
 

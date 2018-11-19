@@ -1,6 +1,6 @@
-// copyright defined in eosjs/LICENSE.txt
+// copyright defined in snaxjs/LICENSE.txt
 
-import { Abi } from "./eosjs-rpc-interfaces";
+import { Abi } from "./snaxjs-rpc-interfaces";
 
 /** Arguments to `getRequiredKeys` */
 export interface AuthorityProviderArgs {
