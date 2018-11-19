@@ -1,4 +1,4 @@
-import * as ecc from "snaxjs-ecc";
+import * as ecc from "@snaxfoundation/snaxjs-ecc";
 import JsSignatureProvider from "../snaxjs-jssig";
 
 describe("JsSignatureProvider", () => {

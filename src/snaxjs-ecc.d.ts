@@ -1,1 +1,1 @@
-declare module "snaxjs-ecc";
+declare module "@snaxfoundation/snaxjs-ecc";
