@@ -11,5 +11,6 @@ jobs:
         provider: npm
         email: "support@snax.one"
         api_key: "$NPM_API_KEY"
+        skip_cleanup: true
         on:
           branch: master
