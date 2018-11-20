@@ -3,6 +3,9 @@
   "version": "20.0.0-beta4",
   "description": "Talk to snax API",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "test": "jest",

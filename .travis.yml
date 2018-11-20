@@ -6,7 +6,7 @@ jobs:
   include:
     - stage: npm release
       node_js: "10.0.0"
-      script: npm install -g typescript
+      script: npm i && npm install -g typescript
       deploy:
         provider: npm
         email: "support@snax.one"
