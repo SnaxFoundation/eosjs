@@ -6,7 +6,7 @@ If you are looking for the the previous version of `snaxjs` you can [find it her
 
 ### NodeJS
 
-`npm install snaxjs@beta`
+`npm install @snaxfoundation/snaxjs`
 
 ## Basic Usage
 
