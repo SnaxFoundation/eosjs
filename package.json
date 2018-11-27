@@ -1,8 +1,11 @@
 {
   "name": "snaxjs",
-  "version": "20.0.0-beta3",
-  "description": "Talk to snax API",
+  "version": "20.0.0-beta5",
+  "description": "Talk to Snax API",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "test": "jest",

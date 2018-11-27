@@ -1,9 +1,6 @@
 {
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended",
-    "tslint-eslint-rules"
-  ],
+  "extends": ["tslint:recommended", "tslint-eslint-rules"],
   "jsRules": {},
   "rules": {
     "max-classes-per-file": false,

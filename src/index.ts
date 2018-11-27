@@ -7,4 +7,12 @@ import * as RpcInterfaces from "./snaxjs-rpc-interfaces";
 import RpcError from "./snaxjs-rpcerror";
 import * as Serialize from "./snaxjs-serialize";
 
-export { Api, ApiInterfaces, JsonRpc, RpcInterfaces, RpcError, JsSignatureProvider, Serialize };
+export {
+  Api,
+  ApiInterfaces,
+  JsonRpc,
+  RpcInterfaces,
+  RpcError,
+  JsSignatureProvider,
+  Serialize
+};
