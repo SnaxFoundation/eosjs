@@ -1,5 +1,5 @@
 {
-  "name": "snaxjs",
+  "name": "@snaxfoundation/snaxjs",
   "version": "20.0.0-beta5",
   "description": "Talk to Snax API",
   "main": "dist/index.js",
