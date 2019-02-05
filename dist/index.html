@@ -1,0 +1,52 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!--
+  sha512-ZNj2roAUohp5a75xghMPchptWns6y6Gxj6x6C56f2CSVPcmUNzHWUIpbXHeXPj0rD3yRSDXeF22Brs11F8ESSw== lib/eos.js
+  sha512-zhPSKFEBlDVvUzjl9aBS66cI8tDYoLetynuKvIekHT8NZZ12oxwcZ//M/eT/2Rb/pR/cjFvLD8104Cy//sdEnA== lib/eos.min.js
+  sha512-VKOxq8R14PpPh4nbLvD8DtxxTv1UmZp7pb3+P8IOQ36m3PBJpm6cd8pI8WRI6d9/aozwADKb3HSFQ7A8s+OhSA== lib/eos.min.js.map
+  -->
+
+  <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.8/lib/eos.min.js"
+    integrity="sha512-zhPSKFEBlDVvUzjl9aBS66cI8tDYoLetynuKvIekHT8NZZ12oxwcZ//M/eT/2Rb/pR/cjFvLD8104Cy//sdEnA=="
+    crossorigin="anonymous"></script>
+
+  <script>
+    /**
+      # Testnets
+      https://github.com/CryptoLions/EOS-Jungle-Testnet
+      Jungle chainId: `038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca`
+
+      # Mainnets
+      Find a trusted blockproducer (https://bloks.io/producers for example).
+      EOS chainId: `aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906`
+
+      Look for the published `bp.json` with an `api_endpoint` under the BPs
+      domain (https://choosen_block_producer/bp.json for example).
+    */
+
+    chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+    httpEndpoint = 'https://mainnet.libertyblock.io:7777'
+
+    eosConfig = {
+      chainId: chainId,
+      httpEndpoint: httpEndpoint,
+      verbose: true
+    }
+
+    eos = Eos(eosConfig)
+
+    const sampleParameters = {
+      httpEndpoint,
+      chainId: chainId.substring(0, 10) + '..'
+    }
+
+    console.log(`>> eos = Eos(${JSON.stringify(sampleParameters)})`)
+    eosConfig.verbose = true
+
+  </script>
+</head>
+<body>
+  See console..
+</body>
+</html>
