@@ -4,7 +4,6 @@ const fs = require('fs')
 
 const Snax = require('.')
 const {ecc} = Snax.modules
-const {Keystore} = require('@snaxfoundation/snaxjs-keygen')
 
 const wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
@@ -309,13 +308,6 @@ describe('keyProvider', () => {
       assert.equal(tr.transaction.signatures.length, 1)
       assert.equal(typeof tr.transaction.signatures[0], 'string')
     })
-  })
-
-  it('from snaxjs-keygen', () => {
-    const keystore = Keystore('uid')
-    keystore.deriveKeys({parent: wif})
-    const snax = Snax({keyProvider: keystore.keyProvider})
-    return snax.transfer('inita', 'initb', '12.0000 SNAX', '', true)
   })
 
   it('return Promise', () => {
