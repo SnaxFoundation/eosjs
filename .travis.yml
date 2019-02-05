@@ -1,11 +1,16 @@
-sudo: required
-
-services:
-  - docker
-
 language: node_js
 node_js:
-  - "10"
+  - "10.0.0"
 
-script:
-  - cd docker && ./run_tests.sh
+jobs:
+  include:
+    - stage: npm release
+      node_js: "10.0.0"
+      script: npm i && npm install -g typescript
+      deploy:
+        provider: npm
+        email: "support@snax.one"
+        api_key: "$NPM_API_KEY"
+        skip_cleanup: true
+        on:
+          branch: v16.0.8
