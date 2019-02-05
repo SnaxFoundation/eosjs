@@ -1,8 +1,11 @@
 {
-  "name": "snaxfoundation/snaxjs",
+  "name": "@snaxfoundation/snaxjs",
   "version": "16.0.8",
   "description": "General purpose library for the SNAX blockchain.",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "README.md",
     "docs",
