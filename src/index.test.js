@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const Snax = require('.')
 const {ecc} = Snax.modules
-const {Keystore} = require('snaxjs-keygen')
+const {Keystore} = require('@snaxfoundation/snaxjs-keygen')
 
 const wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 

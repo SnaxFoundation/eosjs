@@ -49,7 +49,7 @@
     "browserify": "14.4.0",
     "camel-case": "^3.0.0",
     "coveralls": "^3.0.0",
-    "snaxjs-keygen": "^1.3.2",
+    "@snaxfoundation/snaxjs-keygen": "^1.3.2",
     "jsdoc-to-markdown": "^3.0.4",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1",
