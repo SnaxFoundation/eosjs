@@ -1,4 +1,4 @@
-const {Signature, PublicKey} = require('snaxjs-ecc')
+const {Signature, PublicKey} = require('@snaxfoundation/snaxjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const ByteBuffer = require('bytebuffer')
 const assert = require('assert')

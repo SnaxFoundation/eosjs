@@ -1,5 +1,5 @@
 const assert = require('assert')
-const ecc = require('snaxjs-ecc')
+const ecc = require('@snaxfoundation/snaxjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const createHash = require('create-hash')
 const {processArgs} = require('snaxjs-api')

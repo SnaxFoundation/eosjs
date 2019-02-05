@@ -628,7 +628,7 @@ var {format, api, ecc, json, Fcbuffer} = Snax.modules
   * Use this library directly if you need read-only access to the blockchain
     (don't need to sign transactions).
 
-* snaxjs-ecc [[Github](https://github.com/snax/snaxjs-ecc), [NPM](https://www.npmjs.org/package/snaxjs-ecc)]
+* snaxjs-ecc [[Github](https://github.com/SnaxFoundation/snaxjs-ecc), [NPM](https://www.npmjs.com/package/@snaxfoundation/snaxjs-ecc)]
   * Private Key, Public Key, Signature, AES, Encryption / Decryption
   * Validate public or private keys
   * Encrypt or decrypt with SNAX compatible checksums
