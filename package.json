@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SNAX/snaxjs.git"
+    "url": "git+https://github.com/SnaxFoundation/snaxjs.git"
   },
   "keywords": [
     "SNAX",
@@ -36,9 +36,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SNAX/snaxjs/issues"
+    "url": "https://github.com/SnaxFoundation/snaxjs/issues"
   },
-  "homepage": "https://github.com/SNAX/snaxjs#readme",
+  "homepage": "https://github.com/SnaxFoundation/snaxjs#readme",
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",

@@ -9,8 +9,8 @@ describe('shorthand', () => {
 
   it('authority', async () => {
     const snax = Snax({keyPrefix: 'PUB'})
-    const snax = await snax.contract('snax')
-    const {authority} = snax.fc.structs
+    const snaxio = await snax.contract('snax')
+    const {authority} = snaxio.fc.structs
 
     const pubkey = 'PUB6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
     const auth = {threshold: 1, keys: [{key: pubkey, weight: 1}]}
@@ -24,8 +24,8 @@ describe('shorthand', () => {
 
   it('PublicKey sorting', async () => {
     const snax = Snax()
-    const snax = await snax.contract('snax')
-    const {authority} = snax.fc.structs
+    const snaxio = await snax.contract('snax')
+    const {authority} = snaxio.fc.structs
 
     const pubkeys = [
       'SNAX7wBGPvBgRVa4wQN2zm5CjgBF6S7tP7R3JavtSa2unHUoVQGhey',
