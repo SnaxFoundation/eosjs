@@ -1,6 +1,6 @@
 const ecc = require('@snaxfoundation/snaxjs-ecc')
 const Fcbuffer = require('fcbuffer')
-const SnaxApi = require('snaxjs-api')
+const SnaxApi = require('@snaxfoundation/snaxjs-api')
 const assert = require('assert')
 
 const Structs = require('./structs')

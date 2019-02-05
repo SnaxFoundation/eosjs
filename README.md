@@ -89,7 +89,7 @@ snax = Snax({keyPrefix: 'PUB'})
 snax = Snax.modules.api({/*config*/})
 
 // Read-only instance when an application never needs to write (smaller library)
-SnaxApi = require('snaxjs-api')
+SnaxApi = require('@snaxfoundation/snaxjs-api')
 snax = SnaxApi({/*config*/})
 ```
 
@@ -136,7 +136,7 @@ snax.getInfo((error, result) => { console.log(error, result) })
 
 Chain and history API functions are available after creating the `snax` object.
 
-* [API](https://github.com/SNAX/snaxjs-api/blob/master/docs/api.md#snax--object)
+* [API](https://github.com/SnaxFoundation/snaxjs-api/blob/master/docs/api.md#snax--object)
 
 ### Configuration
 
@@ -206,7 +206,7 @@ snax = Snax(config)
 * **transactionHeaders** (advanced) - manually calculate transaction header.  This
   may be provided so snaxjs does not need to make header related API calls to
   snaxnode.  Used in environments like cold-storage.  This callback is called for
-  every transaction. Headers are documented here [snaxjs-api#headers](https://github.com/SNAX/snaxjs-api/blob/HEAD/docs/index.md#headers--object).
+  every transaction. Headers are documented here [snaxjs-api#headers](https://github.com/SnaxFoundation/snaxjs-api/blob/HEAD/docs/index.md#headers--object).
   * `transactionHeaders: (expireInSeconds, callback) => {callback(null/*error*/, headers)}`
 
 * **logger** - default logging configuration.
@@ -623,7 +623,7 @@ var {format, api, ecc, json, Fcbuffer} = Snax.modules
   * Blockchain name validation
   * Asset string formatting
 
-* snaxjs-api [[Github](https://github.com/snax/snaxjs-api), [NPM](https://www.npmjs.org/package/snaxjs-api)]
+* snaxjs-api [[Github](https://github.com/snax/snaxjs-api), [NPM](https://www.npmjs.com/package/snaxjs-api)]
   * Remote API to an SNAX blockchain node (snaxnode)
   * Use this library directly if you need read-only access to the blockchain
     (don't need to sign transactions).
@@ -634,7 +634,7 @@ var {format, api, ecc, json, Fcbuffer} = Snax.modules
   * Encrypt or decrypt with SNAX compatible checksums
   * Calculate a shared secret
 
-* json {[api](https://github.com/SNAX/snaxjs-api/blob/master/src/api), [schema](https://github.com/SNAX/snaxjs/blob/master/src/schema)},
+* json {[api](https://github.com/SnaxFoundation/snaxjs-api/blob/master/src/api), [schema](https://github.com/SNAX/snaxjs/blob/master/src/schema)},
   * Blockchain definitions (api method names, blockchain schema)
 
 * snaxjs-keygen [[Github](https://github.com/snax/snaxjs-keygen), [NPM](https://www.npmjs.org/package/snaxjs-keygen)]

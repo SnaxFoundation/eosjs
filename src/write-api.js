@@ -2,7 +2,7 @@ const assert = require('assert')
 const ecc = require('@snaxfoundation/snaxjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const createHash = require('create-hash')
-const {processArgs} = require('snaxjs-api')
+const {processArgs} = require('@snaxfoundation/snaxjs-api')
 const Structs = require('./structs')
 
 module.exports = writeApiGen
