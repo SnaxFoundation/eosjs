@@ -2,11 +2,11 @@
 
 Some files are generated.
 
-See `eosjs/bin/eosio-abi-update.sh`
+See `snaxjs/bin/snax-abi-update.sh`
 
 Updated as follows:
 
 ```bash
-cd ~/eosjs/docker && ./up.sh
-cd ~/eosjs/bin && ./eosio-abi-update.sh
+cd ~/snaxjs/docker && ./up.sh
+cd ~/snaxjs/bin && ./snax-abi-update.sh
 ```

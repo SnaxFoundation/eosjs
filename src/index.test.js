@@ -2,15 +2,15 @@
 const assert = require('assert')
 const fs = require('fs')
 
-const Eos = require('.')
-const {ecc} = Eos.modules
-const {Keystore} = require('eosjs-keygen')
+const Snax = require('.')
+const {ecc} = Snax.modules
+const {Keystore} = require('snaxjs-keygen')
 
 const wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
 describe('version', () => {
   it('exposes a version number', () => {
-    assert.ok(Eos.version)
+    assert.ok(Snax.version)
   })
 })
 
@@ -31,7 +31,7 @@ describe('offline', () => {
     const transactionHeaders = (expireInSeconds, callback) => {
       callback(null/*error*/, headers)
     }
-    const eos = Eos({
+    const snax = Snax({
       keyProvider: [
         ecc.seedPrivate('key1'),
         ecc.seedPrivate('key2')
@@ -40,13 +40,13 @@ describe('offline', () => {
       transactionHeaders
     })
 
-    const trx = await eos.nonce(1, {authorization: 'inita'})
+    const trx = await snax.nonce(1, {authorization: 'inita'})
     assert.equal(trx.transaction.signatures.length, 2, 'signature count')
   })
 
   describe('custom transactions', function () {
     const nonce = {
-      account: 'eosio.null',
+      account: 'snax.null',
       name: 'nonce',
       data: '010f'
     }
@@ -56,12 +56,12 @@ describe('offline', () => {
       permission: 'active'
     }]
 
-    const eos = Eos({
+    const snax = Snax({
       keyProvider: wif
     })
 
     it('context_free_actions', async function() {
-      await eos.transaction({
+      await snax.transaction({
         context_free_actions: [nonce],// can't have authorization
         actions: [
           // only action, needs an authorization
@@ -71,7 +71,7 @@ describe('offline', () => {
     })
 
     it('nonce', async function() {
-      const trx = await eos.transaction({
+      const trx = await snax.transaction({
         actions: [ Object.assign({}, nonce, {authorization}) ],
       })
     })
@@ -85,16 +85,16 @@ describe('offline', () => {
     }
 
     const transactionHeaders = Object.assign({}, headers, headerOverrides)
-    const xfer = ['few', 'many', '100.0000 SYS', ''/*memo*/]
+    const xfer = ['few', 'many', '100.0000 SNAX', ''/*memo*/]
 
     it('global', async function() {
-      const eos = Eos({
+      const snax = Snax({
         keyProvider: wif,
         httpEndpoint: null,
         transactionHeaders
       })
 
-      const trx = await eos.transfer(...xfer)
+      const trx = await snax.transfer(...xfer)
 
       assert.deepEqual({
         expiration: trx.transaction.transaction.expiration,
@@ -110,7 +110,7 @@ describe('offline', () => {
       assert.equal(trx.transaction.signatures.length, 1, 'signature count')
     })
 
-    const eos = Eos({
+    const snax = Snax({
       sign: false,
       broadcast: false,
       keyProvider: wif,
@@ -119,10 +119,10 @@ describe('offline', () => {
     })
 
     it('object', async function() {
-      const trx = await eos.transaction({
+      const trx = await snax.transaction({
         delay_sec: 369,
         actions: [{
-          account: 'eosio.null',
+          account: 'snax.null',
           name: 'nonce',
           data: '010f',
           authorization: [{actor: 'inita', permission: 'owner'}]
@@ -132,18 +132,18 @@ describe('offline', () => {
     })
 
     it('action', async function() {
-      const trx = await eos.transfer(...xfer, {delay_sec: 369})
+      const trx = await snax.transfer(...xfer, {delay_sec: 369})
       assert.equal(trx.transaction.transaction.delay_sec, 369, 'delay_sec')
     })
 
     it('callback', async function() {
-      const trx = await eos.transaction(tr => {tr.transfer(...xfer)}, {delay_sec: 369})
+      const trx = await snax.transaction(tr => {tr.transfer(...xfer)}, {delay_sec: 369})
       assert.equal(trx.transaction.transaction.delay_sec, 369, 'delay_sec')
     })
 
     it('contract', async function() {
-      const trx = await eos.transaction('eosio.token',
-        eosio_token => { eosio_token.transfer(...xfer) },
+      const trx = await snax.transaction('snax.token',
+        snax_token => { snax_token.transfer(...xfer) },
         {delay_sec: 369}
       )
       assert.equal(trx.transaction.transaction.delay_sec, 369, 'delay_sec')
@@ -152,15 +152,15 @@ describe('offline', () => {
   })
 
   it('load abi', async function() {
-    const eos = Eos({httpEndpoint: null})
+    const snax = Snax({httpEndpoint: null})
 
-    const abiBuffer = fs.readFileSync(`docker/contracts/eosio.bios/eosio.bios.abi`)
+    const abiBuffer = fs.readFileSync(`docker/contracts/snax.bios/snax.bios.abi`)
     const abiObject = JSON.parse(abiBuffer)
 
-    assert.deepEqual(abiObject, eos.fc.abiCache.abi('eosio.bios', abiBuffer).abi)
-    assert.deepEqual(abiObject, eos.fc.abiCache.abi('eosio.bios', abiObject).abi)
+    assert.deepEqual(abiObject, snax.fc.abiCache.abi('snax.bios', abiBuffer).abi)
+    assert.deepEqual(abiObject, snax.fc.abiCache.abi('snax.bios', abiObject).abi)
 
-    const bios = await eos.contract('eosio.bios')
+    const bios = await snax.contract('snax.bios')
     assert(typeof bios.newaccount === 'function', 'unrecognized contract')
   })
 
@@ -168,8 +168,8 @@ describe('offline', () => {
 
 // describe('networks', () => {
 //   it('testnet', (done) => {
-//     const eos = Eos()
-//     eos.getBlock(1, (err, block) => {
+//     const snax = Snax()
+//     snax.getBlock(1, (err, block) => {
 //       if(err) {
 //         throw err
 //       }
@@ -180,17 +180,17 @@ describe('offline', () => {
 
 describe('Contracts', () => {
   it('Messages do not sort', async function() {
-    const local = Eos()
+    const local = Snax()
     const opts = {sign: false, broadcast: false}
-    const tx = await local.transaction(['currency', 'eosio.token'], ({currency, eosio_token}) => {
-      // make sure {account: 'eosio.token', ..} remains first
-      eosio_token.transfer('inita', 'initd', '1.1000 SYS', '')
+    const tx = await local.transaction(['currency', 'snax.token'], ({currency, snax_token}) => {
+      // make sure {account: 'snax.token', ..} remains first
+      snax_token.transfer('inita', 'initd', '1.1000 SNAX', '')
 
       // {account: 'currency', ..} remains second (reverse sort)
       currency.transfer('inita', 'initd', '1.2000 CUR', '')
 
     }, opts)
-    assert.equal(tx.transaction.transaction.actions[0].account, 'eosio.token')
+    assert.equal(tx.transaction.transaction.actions[0].account, 'snax.token')
     assert.equal(tx.transaction.transaction.actions[1].account, 'currency')
   })
 })
@@ -201,16 +201,16 @@ describe('Contract', () => {
       this.timeout(4000)
       // console.log('todo, skipping deploy ' + `${contract}@${account}`)
       const config = {binaryen: require("binaryen"), keyProvider: wif}
-      const eos = Eos(config)
+      const snax = Snax(config)
 
       const wasm = fs.readFileSync(`docker/contracts/${contract}/${contract}.wasm`)
       const abi = fs.readFileSync(`docker/contracts/${contract}/${contract}.abi`)
 
 
-      await eos.setcode(account, 0, 0, wasm)
-      await eos.setabi(account, JSON.parse(abi))
+      await snax.setcode(account, 0, 0, wasm)
+      await snax.setabi(account, JSON.parse(abi))
 
-      const code = await eos.getAbi(account)
+      const code = await snax.getAbi(account)
 
       const diskAbi = JSON.parse(abi)
       delete diskAbi.____comment
@@ -226,22 +226,22 @@ describe('Contract', () => {
   // avoids a same contract version deploy error.
   // TODO: undeploy contract instead (when API allows this)
 
-  deploy('eosio.msig')
-  deploy('eosio.token')
-  deploy('eosio.bios')
-  deploy('eosio.system')
+  deploy('snax.msig')
+  deploy('snax.token')
+  deploy('snax.bios')
+  deploy('snax.system')
 })
 
 describe('Contracts Load', () => {
   function load(name) {
     it(name, async function() {
-      const eos = Eos()
-      const contract = await eos.contract(name)
+      const snax = Snax()
+      const contract = await snax.contract(name)
       assert(contract, 'contract')
     })
   }
-  load('eosio')
-  load('eosio.token')
+  load('snax')
+  load('snax.token')
 })
 
 describe('keyProvider', () => {
@@ -250,21 +250,21 @@ describe('keyProvider', () => {
   }
 
   it('global', async function() {
-    const eos = Eos({keyProvider})
-    await eos.transfer('inita', 'initb', '1.0001 SYS', '')
+    const snax = Snax({keyProvider})
+    await snax.transfer('inita', 'initb', '1.0001 SNAX', '')
   })
 
   it('per-action', async function() {
-    const eos = Eos()
+    const snax = Snax()
 
-    await eos.transfer('inita', 'initb', '1.0002 SYS', '', {keyProvider})
+    await snax.transfer('inita', 'initb', '1.0002 SNAX', '', {keyProvider})
 
-    await eos.transaction(tr => {
-      tr.transfer('inita', 'initb', '1.0003 SYS', '')
+    await snax.transaction(tr => {
+      tr.transfer('inita', 'initb', '1.0003 SNAX', '')
     }, {keyProvider})
 
-    const token = await eos.contract('eosio.token')
-    await token.transfer('inita', 'initb', '1.0004 SYS', '', {keyProvider})
+    const token = await snax.contract('snax.token')
+    await token.transfer('inita', 'initb', '1.0004 SNAX', '', {keyProvider})
   })
 
   it('multiple private keys (get_required_keys)', () => {
@@ -276,9 +276,9 @@ describe('keyProvider', () => {
       ]
     }
 
-    const eos = Eos({keyProvider})
+    const snax = Snax({keyProvider})
 
-    return eos.transfer('inita', 'initb', '1.2740 SYS', '', false).then(tr => {
+    return snax.transfer('inita', 'initb', '1.2740 SNAX', '', false).then(tr => {
       assert.equal(tr.transaction.signatures.length, 1)
       assert.equal(typeof tr.transaction.signatures[0], 'string')
     })
@@ -303,24 +303,24 @@ describe('keyProvider', () => {
       assert(false, 'unexpected keyProvider callback')
     }
 
-    const eos = Eos({keyProvider})
+    const snax = Snax({keyProvider})
 
-    return eos.transfer('inita', 'initb', '9.0000 SYS', '', false).then(tr => {
+    return snax.transfer('inita', 'initb', '9.0000 SNAX', '', false).then(tr => {
       assert.equal(tr.transaction.signatures.length, 1)
       assert.equal(typeof tr.transaction.signatures[0], 'string')
     })
   })
 
-  it('from eosjs-keygen', () => {
+  it('from snaxjs-keygen', () => {
     const keystore = Keystore('uid')
     keystore.deriveKeys({parent: wif})
-    const eos = Eos({keyProvider: keystore.keyProvider})
-    return eos.transfer('inita', 'initb', '12.0000 SYS', '', true)
+    const snax = Snax({keyProvider: keystore.keyProvider})
+    return snax.transfer('inita', 'initb', '12.0000 SNAX', '', true)
   })
 
   it('return Promise', () => {
-    const eos = Eos({keyProvider: new Promise(resolve => {resolve(wif)})})
-    return eos.transfer('inita', 'initb', '1.6180 SYS', '', true)
+    const snax = Snax({keyProvider: new Promise(resolve => {resolve(wif)})})
+    return snax.transfer('inita', 'initb', '1.6180 SNAX', '', true)
   })
 })
 
@@ -328,18 +328,18 @@ describe('signProvider', () => {
   it('custom', function() {
     const customSignProvider = ({buf, sign, transaction}) => {
 
-      // All potential keys (EOS6MRy.. is the pubkey for 'wif')
-      const pubkeys = ['EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV']
+      // All potential keys (SNAX6MRy.. is the pubkey for 'wif')
+      const pubkeys = ['SNAX6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV']
 
-      return eos.getRequiredKeys(transaction, pubkeys).then(res => {
+      return snax.getRequiredKeys(transaction, pubkeys).then(res => {
         // Just the required_keys need to sign
         assert.deepEqual(res.required_keys, pubkeys)
         return sign(buf, wif) // return hex string signature or array of signatures
       })
     }
 
-    const eos = Eos({signProvider: customSignProvider})
-    return eos.transfer('inita', 'initb', '2.0000 SYS', '', false)
+    const snax = Snax({signProvider: customSignProvider})
+    return snax.transfer('inita', 'initb', '2.0000 SNAX', '', false)
   })
 })
 
@@ -348,79 +348,79 @@ describe('transactions', () => {
   const promiseSigner = (args) => Promise.resolve(signProvider(args))
 
   it('usage', () => {
-    const eos = Eos({signProvider})
-    eos.setprods()
+    const snax = Snax({signProvider})
+    snax.setprods()
   })
 
   it('create asset', async function() {
-    const eos = Eos({signProvider})
-    const pubkey = 'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
-    const auth = {authorization: 'eosio.token'}
-    await eos.create('eosio.token', '10000 ' + randomAsset(), auth)
-    await eos.create('eosio.token', '10000.00 ' + randomAsset(), auth)
+    const snax = Snax({signProvider})
+    const pubkey = 'SNAX6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
+    const auth = {authorization: 'snax.token'}
+    await snax.create('snax.token', '10000 ' + randomAsset(), auth)
+    await snax.create('snax.token', '10000.00 ' + randomAsset(), auth)
   })
 
   it('newaccount (broadcast)', () => {
-    const eos = Eos({signProvider})
-    const pubkey = 'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
+    const snax = Snax({signProvider})
+    const pubkey = 'SNAX6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
     const name = randomName()
 
-    return eos.transaction(tr => {
+    return snax.transaction(tr => {
       tr.newaccount({
-        creator: 'eosio',
+        creator: 'snax',
         name,
         owner: pubkey,
         active: pubkey
       })
 
       tr.buyrambytes({
-        payer: 'eosio',
+        payer: 'snax',
         receiver: name,
         bytes: 8192
       })
 
       tr.delegatebw({
-        from: 'eosio',
+        from: 'snax',
         receiver: name,
-        stake_net_quantity: '10.0000 SYS',
-        stake_cpu_quantity: '10.0000 SYS',
+        stake_net_quantity: '10.0000 SNAX',
+        stake_cpu_quantity: '10.0000 SNAX',
         transfer: 0
       })
     })
   })
 
   it('mockTransactions pass', () => {
-    const eos = Eos({signProvider, mockTransactions: 'pass'})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '').then(transfer => {
+    const snax = Snax({signProvider, mockTransactions: 'pass'})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '').then(transfer => {
       assert(transfer.mockTransaction, 'transfer.mockTransaction')
     })
   })
 
   it('mockTransactions fail', () => {
-    const eos = Eos({signProvider, mockTransactions: 'fail'})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '').catch(error => {
+    const snax = Snax({signProvider, mockTransactions: 'fail'})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '').catch(error => {
       assert(error.indexOf('fake error') !== -1, 'expecting: fake error')
     })
   })
 
   it('transfer (broadcast)', () => {
-    const eos = Eos({signProvider})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '')
+    const snax = Snax({signProvider})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '')
   })
 
   it('transfer custom token precision (broadcast)', () => {
-    const eos = Eos({signProvider})
-    return eos.transfer('inita', 'initb', '1.618 PHI', '')
+    const snax = Snax({signProvider})
+    return snax.transfer('inita', 'initb', '1.618 PHI', '')
   })
 
   it('transfer custom authorization (broadcast)', () => {
-    const eos = Eos({signProvider})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '', {authorization: 'inita@owner'})
+    const snax = Snax({signProvider})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '', {authorization: 'inita@owner'})
   })
 
   it('transfer custom authorization (permission only)', async () => {
-    const eos = Eos({signProvider, broadcast: false, authorization: '@posting'})
-    const tr = await eos.transfer('inita', 'initb', '1.0000 SYS', '')
+    const snax = Snax({signProvider, broadcast: false, authorization: '@posting'})
+    const tr = await snax.transfer('inita', 'initb', '1.0000 SNAX', '')
     assert.deepEqual(
       tr.transaction.transaction.actions[0].authorization,
       [{actor: 'inita', permission: 'posting'}]
@@ -429,8 +429,8 @@ describe('transactions', () => {
 
   it('transfer custom global authorization', async () => {
     const authorization = [{actor: 'inita', permission: 'posting'}]
-    const eos = Eos({signProvider, authorization, broadcast: false})
-    const tr = await eos.transfer('inita', 'initb', '1.0000 SYS', '')
+    const snax = Snax({signProvider, authorization, broadcast: false})
+    const tr = await snax.transfer('inita', 'initb', '1.0000 SNAX', '')
     assert.deepEqual(
       tr.transaction.transaction.actions[0].authorization,
       authorization
@@ -438,8 +438,8 @@ describe('transactions', () => {
   })
 
   it('transfer custom authorization sorting (no broadcast)', () => {
-    const eos = Eos({signProvider})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '',
+    const snax = Snax({signProvider})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '',
       {authorization: ['initb@owner', 'inita@owner'], broadcast: false}
     ).then(({transaction}) => {
       const ans = [
@@ -451,25 +451,25 @@ describe('transactions', () => {
   })
 
   it('transfer (no broadcast)', () => {
-    const eos = Eos({signProvider})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '', {broadcast: false})
+    const snax = Snax({signProvider})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '', {broadcast: false})
   })
 
   it('transfer (no broadcast, no sign)', () => {
-    const eos = Eos({signProvider})
+    const snax = Snax({signProvider})
     const opts = {broadcast: false, sign: false}
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '', opts).then(tr =>
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '', opts).then(tr =>
       assert.deepEqual(tr.transaction.signatures, [])
     )
   })
 
   it('transfer sign promise (no broadcast)', () => {
-    const eos = Eos({signProvider: promiseSigner})
-    return eos.transfer('inita', 'initb', '1.0000 SYS', '', false)
+    const snax = Snax({signProvider: promiseSigner})
+    return snax.transfer('inita', 'initb', '1.0000 SNAX', '', false)
   })
 
   it('action to unknown contract', done => {
-    Eos({signProvider}).contract('unknown432')
+    Snax({signProvider}).contract('unknown432')
     .then(() => {throw 'expecting error'})
     .catch(error => { // eslint-disable-line handle-callback-err
       done()
@@ -477,13 +477,13 @@ describe('transactions', () => {
   })
 
   it('action to contract', () => {
-    return Eos({signProvider}).contract('eosio.token').then(token => {
-      return token.transfer('inita', 'initb', '1.0000 SYS', '')
+    return Snax({signProvider}).contract('snax.token').then(token => {
+      return token.transfer('inita', 'initb', '1.0000 SNAX', '')
         // transaction sent on each command
         .then(tr => {
           assert.equal(1, tr.transaction.transaction.actions.length)
 
-          return token.transfer('initb', 'inita', '1.0000 SYS', '')
+          return token.transfer('initb', 'inita', '1.0000 SNAX', '')
             .then(tr => {assert.equal(1, tr.transaction.transaction.actions.length)})
         })
     }).then(r => {assert(r == undefined)})
@@ -491,11 +491,11 @@ describe('transactions', () => {
 
   it('action to contract atomic', async function() {
     let amt = 1 // for unique transactions
-    const eos = Eos({signProvider})
+    const snax = Snax({signProvider})
 
-    const trTest = eosio_token => {
-      assert(eosio_token.transfer('inita', 'initb', amt + '.0000 SYS', '') == null)
-      assert(eosio_token.transfer('initb', 'inita', (amt++) + '.0000 SYS', '') == null)
+    const trTest = snax_token => {
+      assert(snax_token.transfer('inita', 'initb', amt + '.0000 SNAX', '') == null)
+      assert(snax_token.transfer('initb', 'inita', (amt++) + '.0000 SNAX', '') == null)
     }
 
     const assertTr = tr =>{
@@ -503,37 +503,37 @@ describe('transactions', () => {
     }
 
     //  contracts can be a string or array
-    await assertTr(await eos.transaction(['eosio.token'], ({eosio_token}) => trTest(eosio_token)))
-    await assertTr(await eos.transaction('eosio.token', eosio_token => trTest(eosio_token)))
+    await assertTr(await snax.transaction(['snax.token'], ({snax_token}) => trTest(snax_token)))
+    await assertTr(await snax.transaction('snax.token', snax_token => trTest(snax_token)))
   })
 
   it('action to contract (contract tr nesting)', function () {
     this.timeout(4000)
-    const tn = Eos({signProvider})
-    return tn.contract('eosio.token').then(eosio_token => {
-      return eosio_token.transaction(tr => {
-        tr.transfer('inita', 'initb', '1.0000 SYS', '')
-        tr.transfer('inita', 'initc', '2.0000 SYS', '')
+    const tn = Snax({signProvider})
+    return tn.contract('snax.token').then(snax_token => {
+      return snax_token.transaction(tr => {
+        tr.transfer('inita', 'initb', '1.0000 SNAX', '')
+        tr.transfer('inita', 'initc', '2.0000 SNAX', '')
       }).then(() => {
-        return eosio_token.transfer('inita', 'initb', '3.0000 SYS', '')
+        return snax_token.transfer('inita', 'initb', '3.0000 SNAX', '')
       })
     })
   })
 
   it('multi-action transaction (broadcast)', () => {
-    const eos = Eos({signProvider})
-    return eos.transaction(tr => {
-      assert(tr.transfer('inita', 'initb', '1.0000 SYS', '') == null)
-      assert(tr.transfer({from: 'inita', to: 'initc', quantity: '1.0000 SYS', memo: ''}) == null)
+    const snax = Snax({signProvider})
+    return snax.transaction(tr => {
+      assert(tr.transfer('inita', 'initb', '1.0000 SNAX', '') == null)
+      assert(tr.transfer({from: 'inita', to: 'initc', quantity: '1.0000 SNAX', memo: ''}) == null)
     }).then(tr => {
       assert.equal(2, tr.transaction.transaction.actions.length)
     })
   })
 
   it('multi-action transaction no inner callback', () => {
-    const eos = Eos({signProvider})
-    return eos.transaction(tr => {
-      tr.transfer('inita', 'inita', '1.0000 SYS', '', cb => {})
+    const snax = Snax({signProvider})
+    return snax.transaction(tr => {
+      tr.transfer('inita', 'inita', '1.0000 SNAX', '', cb => {})
     })
     .then(() => {throw 'expecting rollback'})
     .catch(error => {
@@ -542,8 +542,8 @@ describe('transactions', () => {
   })
 
   it('multi-action transaction error rollback', () => {
-    const eos = Eos({signProvider})
-    return eos.transaction(tr => {throw 'rollback'})
+    const snax = Snax({signProvider})
+    return snax.transaction(tr => {throw 'rollback'})
     .then(() => {throw 'expecting rollback'})
     .catch(error => {
       assert(/rollback/.test(error), error)
@@ -551,8 +551,8 @@ describe('transactions', () => {
   })
 
   it('multi-action transaction Promise.reject rollback', () => {
-    const eos = Eos({signProvider})
-    return eos.transaction(tr => Promise.reject('rollback'))
+    const snax = Snax({signProvider})
+    return snax.transaction(tr => Promise.reject('rollback'))
     .then(() => {throw 'expecting rollback'})
     .catch(error => {
       assert(/rollback/.test(error), error)
@@ -560,17 +560,17 @@ describe('transactions', () => {
   })
 
   it('custom transaction', () => {
-    const eos = Eos({signProvider})
-    return eos.transaction(
+    const snax = Snax({signProvider})
+    return snax.transaction(
       {
         actions: [
           {
-            account: 'eosio.token',
+            account: 'snax.token',
             name: 'transfer',
             data: {
               from: 'inita',
               to: 'initb',
-              quantity: '13.0000 SYS',
+              quantity: '13.0000 SNAX',
               memo: '爱'
             },
             authorization: [{
@@ -585,24 +585,24 @@ describe('transactions', () => {
   })
 
   it('custom contract transfer', async function() {
-    const eos = Eos({signProvider})
-    await eos.contract('currency').then(currency =>
+    const snax = Snax({signProvider})
+    await snax.contract('currency').then(currency =>
       currency.transfer('currency', 'inita', '1.0000 CUR', '')
     )
   })
 })
 
 it('Transaction ABI cache', async function() {
-  const eos = Eos()
-  assert.throws(() => eos.fc.abiCache.abi('eosio.msig'), /not cached/)
-  const abi = await eos.fc.abiCache.abiAsync('eosio.msig')
-  assert.deepEqual(abi, await eos.fc.abiCache.abiAsync('eosio.msig', false/*force*/))
-  assert.deepEqual(abi, eos.fc.abiCache.abi('eosio.msig'))
+  const snax = Snax()
+  assert.throws(() => snax.fc.abiCache.abi('snax.msig'), /not cached/)
+  const abi = await snax.fc.abiCache.abiAsync('snax.msig')
+  assert.deepEqual(abi, await snax.fc.abiCache.abiAsync('snax.msig', false/*force*/))
+  assert.deepEqual(abi, snax.fc.abiCache.abi('snax.msig'))
 })
 
 it('Transaction ABI lookup', async function() {
-  const eos = Eos()
-  const tx = await eos.transaction(
+  const snax = Snax()
+  const tx = await snax.transaction(
     {
       actions: [
         {

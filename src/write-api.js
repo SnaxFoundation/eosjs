@@ -1,8 +1,8 @@
 const assert = require('assert')
-const ecc = require('eosjs-ecc')
+const ecc = require('snaxjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const createHash = require('create-hash')
-const {processArgs} = require('eosjs-api')
+const {processArgs} = require('snaxjs-api')
 const Structs = require('./structs')
 
 module.exports = writeApiGen
@@ -51,8 +51,8 @@ function writeApiGen(Network, network, structs, config, abis) {
   /**
     Immedate send contract actions.
 
-    @example eos.contract('mycontract', [options], [callback])
-    @example eos.contract('mycontract').then(mycontract => mycontract.myaction(...))
+    @example snax.contract('mycontract', [options], [callback])
+    @example snax.contract('mycontract').then(mycontract => mycontract.myaction(...))
   */
   merge.contract = (...args) => {
     const {params, options, returnPromise, callback} =
@@ -104,8 +104,8 @@ function WriteApi(Network, network, config, Transaction) {
 
       const abiPromises = []
 
-      // Eos contract operations are cached (efficient and offline transactions)
-      const cachedCode = new Set(['eosio', 'eosio.token', 'eosio.null'])
+      // Snax contract operations are cached (efficient and offline transactions)
+      const cachedCode = new Set(['snax', 'snax.token', 'snax.null'])
       accounts.forEach(account => {
         if(!cachedCode.has(account)) {
           abiPromises.push(config.abiCache.abiAsync(account))
@@ -174,7 +174,7 @@ function WriteApi(Network, network, config, Transaction) {
     })
   }
 
-  function genMethod(type, definition, transactionArg, account = 'eosio.token', name = type) {
+  function genMethod(type, definition, transactionArg, account = 'snax.token', name = type) {
     return function (...args) {
       if (args.length === 0) {
         console.log(usage({name, type}, definition, Network, account, config))
@@ -315,13 +315,13 @@ function WriteApi(Network, network, config, Transaction) {
       messageList.push(ret)
     }
 
-    // merges can be an object of functions (as in the main eos contract)
+    // merges can be an object of functions (as in the main snax contract)
     // or an object of contract names with functions under those
     for(const key in merges) {
       const value = merges[key]
       const variableName = key.replace(/\./, '_')
       if(typeof value === 'function') {
-        // Native operations (eos contract for example)
+        // Native operations (snax contract for example)
         messageCollector[variableName] = wrap(value)
 
       } else if(typeof value === 'object') {
@@ -444,16 +444,16 @@ function WriteApi(Network, network, config, Transaction) {
       'delay_sec', 'max_net_usage_words', 'max_cpu_usage_ms'
     ]) {
       if(arg[txField] !== undefined) {
-        // eos.transaction('eosio', eosio => { eosio.myaction(..) }, {delay_sec: 369})
-        // eos.transaction({delay_sec: 369, actions: [...]})
+        // snax.transaction('snax', snax => { snax.myaction(..) }, {delay_sec: 369})
+        // snax.transaction({delay_sec: 369, actions: [...]})
         rawTx[txField] = arg[txField]
       } else if(options[txField] !== undefined) {
-        // eos.transaction(tr => {tr.transfer(...)}, {delay_sec: 369})
+        // snax.transaction(tr => {tr.transfer(...)}, {delay_sec: 369})
         rawTx[txField] = options[txField]
       }
     }
 
-    // eosjs calcualted headers
+    // snaxjs calcualted headers
     if( // minimum required headers
       rawTx.expiration === undefined ||
       rawTx.ref_block_num === undefined ||

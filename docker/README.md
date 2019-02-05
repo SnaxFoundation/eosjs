@@ -1,27 +1,27 @@
-Dockerized eosio instance for development and testing.  This container
+Dockerized snax instance for development and testing.  This container
 is designed to reset its blockchain and wallet state upon shutdown.
 
-# Start nodeosd
+# Start snaxnoded
 
-Starting and stopping an eosio instance:
+Starting and stopping an snax instance:
 
 ```js
 ./up.sh
 docker-compose down
 ```
 
-# Load commands like `cleos`
+# Load commands like `clisnax`
 
 ```bash
 . ./dockrc.sh
 ```
 
-The [EOSIO developer docs](https://developers.eos.io/eosio-nodeos/docs/docker-quickstart) uses a `cleos` alias too.  If you see “No such container: eosio”, run ‘unalias cleos’ and try again.
+The [SNAX developer docs](https://developers.snax/snax-snaxnode/docs/docker-quickstart) uses a `clisnax` alias too.  If you see “No such container: snax”, run ‘unalias clisnax’ and try again.
 
 # Unit Test
 
 Run all unit test in a temporary instance.  Note, this script will run
-`npm install` in the eosjs directory.
+`npm install` in the snaxjs directory.
 
 `./run_tests.sh`
 
@@ -30,21 +30,21 @@ Run all unit test in a temporary instance.  Note, this script will run
 After ./up.sh
 
 ```bash
-docker exec docker_nodeosd_1 ls /opt/eosio/bin
-docker exec docker_nodeosd_1 ls /contracts
-docker cp docker_nodeosd_1:/opt/eosio/bin/nodeos .
+docker exec docker_snaxnoded_1 ls /opt/snax/bin
+docker exec docker_snaxnoded_1 ls /contracts
+docker cp docker_snaxnoded_1:/opt/snax/bin/snaxnode .
 
 # Or setup an environment:
 . ./dockerc.sh
-keosd ls /opt/eosio/bin
-cleos --help
+kxd ls /opt/snax/bin
+clisnax --help
 ```
 
 # Stopped container
 
 ```bash
 # Note, update release
-docker run --rm -it eosio/eos:latest ls /opt/eosio/bin
-docker run -v "$(pwd):/share" --rm -it eosio/eos:latest cp /opt/eosio/bin/nodeos /share
+docker run --rm -it snax/snax:latest ls /opt/snax/bin
+docker run -v "$(pwd):/share" --rm -it snax/snax:latest cp /opt/snax/bin/snaxnode /share
 ```
 

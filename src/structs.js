@@ -1,4 +1,4 @@
-const {Signature, PublicKey} = require('eosjs-ecc')
+const {Signature, PublicKey} = require('snaxjs-ecc')
 const Fcbuffer = require('fcbuffer')
 const ByteBuffer = require('bytebuffer')
 const assert = require('assert')
@@ -11,7 +11,7 @@ const {
   printAsset, parseAsset
 } = require('./format')
 
-/** Configures Fcbuffer for EOS specific structs and types. */
+/** Configures Fcbuffer for SNAX specific structs and types. */
 module.exports = (config = {}, extendedSchema) => {
   const structLookup = (lookupName, account) => {
     const cache = config.abiCache.abi(account)
@@ -35,7 +35,7 @@ module.exports = (config = {}, extendedSchema) => {
     throw new Error(`Missing ABI action: ${lookupName}`)
   }
 
-  // If nodeos does not have an ABI setup for a certain action.type, it will throw
+  // If snaxnode does not have an ABI setup for a certain action.type, it will throw
   // an error: `Invalid cast from object_type to string` .. forceActionDataHex
   // may be used to until native ABI is added or fixed.
   const forceActionDataHex = config.forceActionDataHex != null ?
@@ -49,7 +49,7 @@ module.exports = (config = {}, extendedSchema) => {
     config.override
   )
 
-  const eosTypes = {
+  const snaxTypes = {
     name: ()=> [Name],
     public_key: () => [variant(PublicKeyEcc)],
 
@@ -63,7 +63,7 @@ module.exports = (config = {}, extendedSchema) => {
     signature: () => [variant(SignatureType)]
   }
 
-  const customTypes = Object.assign({}, eosTypes, config.customTypes)
+  const customTypes = Object.assign({}, snaxTypes, config.customTypes)
   config = Object.assign({override}, {customTypes}, config)
 
   // Do not sort transaction actions
@@ -84,7 +84,7 @@ module.exports = (config = {}, extendedSchema) => {
 }
 
 /**
-  Name eos::types native.hpp
+  Name snax::types native.hpp
 */
 const Name = (validation) => {
   return {
@@ -174,7 +174,7 @@ const PublicKeyEcc = (validation) => {
 
     toObject (value) {
       if (validation.defaults && value == null) {
-        const keyPrefix = validation.keyPrefix ? validation.keyPrefix : 'EOS'
+        const keyPrefix = validation.keyPrefix ? validation.keyPrefix : 'SNAX'
         return keyPrefix + '6MRy..'
       }
       return value
@@ -185,7 +185,7 @@ const PublicKeyEcc = (validation) => {
 /**
   Internal: precision, symbol
   External: symbol
-  @example 'SYS'
+  @example 'SNAX'
 */
 const Symbol = validation => {
   return {
@@ -226,7 +226,7 @@ const Symbol = validation => {
 
     toObject (value) {
       if (validation.defaults && value == null) {
-        return 'SYS'
+        return 'SNAX'
       }
       // symbol only (without precision prefix)
       return parseAsset(value).symbol
@@ -267,7 +267,7 @@ const SymbolCode = validation => {
 
     toObject (value) {
       if (validation.defaults && value == null) {
-        return 'SYS'
+        return 'SNAX'
       }
       return parseAsset(value).symbol
     }
@@ -277,7 +277,7 @@ const SymbolCode = validation => {
 /**
   Internal: precision, symbol, contract
   External: symbol, contract
-  @example 'SYS@contract'
+  @example 'SNAX@contract'
 */
 const ExtendedSymbol = (validation, baseTypes, customTypes) => {
   const symbolType = customTypes.symbol(validation)
@@ -306,7 +306,7 @@ const ExtendedSymbol = (validation, baseTypes, customTypes) => {
 
     toObject (value) {
       if (validation.defaults && value == null) {
-        return 'SYS@contract'
+        return 'SNAX@contract'
       }
       return value
     }
@@ -315,7 +315,7 @@ const ExtendedSymbol = (validation, baseTypes, customTypes) => {
 
 /**
   Internal: amount, precision, symbol, contract
-  @example '1.0000 SYS'
+  @example '1.0000 SNAX'
 */
 const Asset = (validation, baseTypes, customTypes) => {
   const amountType = baseTypes.int64(validation)
@@ -355,7 +355,7 @@ const Asset = (validation, baseTypes, customTypes) => {
 
     toObject (value) {
       if (validation.defaults && value == null) {
-        return '0.0001 SYS'
+        return '0.0001 SNAX'
       }
 
       const {amount, precision, symbol} = parseAsset(value)
@@ -369,7 +369,7 @@ const Asset = (validation, baseTypes, customTypes) => {
 }
 
 /**
-  @example '1.0000 SYS@contract'
+  @example '1.0000 SNAX@contract'
 */
 const ExtendedAsset = (validation, baseTypes, customTypes) => {
   const assetType = customTypes.asset(validation)
@@ -396,7 +396,7 @@ const ExtendedAsset = (validation, baseTypes, customTypes) => {
     },
 
     fromObject (value) {
-      // like: 1.0000 SYS@contract or 1 SYS@contract
+      // like: 1.0000 SNAX@contract or 1 SNAX@contract
       const asset = {}
       if(typeof value === 'string') {
         Object.assign(asset, parseAsset(value))
@@ -420,8 +420,8 @@ const ExtendedAsset = (validation, baseTypes, customTypes) => {
         return {
           amount: '1.0000',
           precision: 4,
-          symbol: 'SYS',
-          contract: 'eosio.token'
+          symbol: 'SNAX',
+          contract: 'snax.token'
         }
       }
 
@@ -468,7 +468,7 @@ const SignatureType = (validation, baseTypes) => {
 }
 
 const authorityOverride = config => ({
-  /** shorthand `EOS6MRyAj..` */
+  /** shorthand `SNAX6MRyAj..` */
   'authority.fromObject': (value) => {
     if(PublicKey.fromString(value, config.keyPrefix)) {
       return {
@@ -508,7 +508,7 @@ const abiOverride = structLookup => ({
   },
 
   'setabi.abi.appendByteBuffer': ({fields, object, b}) => {
-    const ser = structLookup('abi_def', 'eosio')
+    const ser = structLookup('abi_def', 'snax')
     const b2 = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN)
 
     if(Buffer.isBuffer(object.abi)) {

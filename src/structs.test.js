@@ -3,14 +3,14 @@ const assert = require('assert')
 const Fcbuffer = require('fcbuffer')
 const ByteBuffer = require('bytebuffer')
 
-const Eos = require('.')
+const Snax = require('.')
 
 describe('shorthand', () => {
 
   it('authority', async () => {
-    const eos = Eos({keyPrefix: 'PUB'})
-    const eosio = await eos.contract('eosio')
-    const {authority} = eosio.fc.structs
+    const snax = Snax({keyPrefix: 'PUB'})
+    const snax = await snax.contract('snax')
+    const {authority} = snax.fc.structs
 
     const pubkey = 'PUB6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
     const auth = {threshold: 1, keys: [{key: pubkey, weight: 1}]}
@@ -23,13 +23,13 @@ describe('shorthand', () => {
   })
 
   it('PublicKey sorting', async () => {
-    const eos = Eos()
-    const eosio = await eos.contract('eosio')
-    const {authority} = eosio.fc.structs
+    const snax = Snax()
+    const snax = await snax.contract('snax')
+    const {authority} = snax.fc.structs
 
     const pubkeys = [
-      'EOS7wBGPvBgRVa4wQN2zm5CjgBF6S7tP7R3JavtSa2unHUoVQGhey',
-      'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
+      'SNAX7wBGPvBgRVa4wQN2zm5CjgBF6S7tP7R3JavtSa2unHUoVQGhey',
+      'SNAX6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
     ]
 
     const authSorted = {threshold: 1, keys: [
@@ -47,8 +47,8 @@ describe('shorthand', () => {
   })
 
   it('public_key', () => {
-    const eos = Eos({keyPrefix: 'PUB'})
-    const {structs, types} = eos.fc
+    const snax = Snax({keyPrefix: 'PUB'})
+    const {structs, types} = snax.fc
     const PublicKeyType = types.public_key()
     const pubkey = 'PUB6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
     // 02c0ded2bc1f1305fb0faac5e6c03ee3a1924234985427b6167ca569d13df435cf
@@ -56,42 +56,42 @@ describe('shorthand', () => {
   })
 
   it('symbol', () => {
-    const eos = Eos()
-    const {types} = eos.fc
+    const snax = Snax()
+    const {types} = snax.fc
     const Symbol = types.symbol()
-    assertSerializer(Symbol, '4,SYS', '4,SYS', 'SYS')
+    assertSerializer(Symbol, '4,SNAX', '4,SNAX', 'SNAX')
   })
 
   it('symbol_code', () => {
-    const eos = Eos({defaults: true})
-    const {types} = eos.fc
+    const snax = Snax({defaults: true})
+    const {types} = snax.fc
     const SymbolCode = types.symbol_code()
     assertSerializer(SymbolCode, SymbolCode.toObject())
   })
 
   it('extended_symbol', () => {
-    const eos = Eos({defaults: true})
-    const esType = eos.fc.types.extended_symbol()
+    const snax = Snax({defaults: true})
+    const esType = snax.fc.types.extended_symbol()
     // const esString = esType.toObject()
-    assertSerializer(esType, '4,SYS@contract')
+    assertSerializer(esType, '4,SNAX@contract')
   })
 
   it('asset', () => {
-    const eos = Eos()
-    const {types} = eos.fc
+    const snax = Snax()
+    const {types} = snax.fc
     const aType = types.asset()
-    assertSerializer(aType, '1.0001 SYS')
+    assertSerializer(aType, '1.0001 SNAX')
   })
 
   it('extended_asset', () => {
-    const eos = Eos({defaults: true})
-    const eaType = eos.fc.types.extended_asset()
+    const snax = Snax({defaults: true})
+    const eaType = snax.fc.types.extended_asset()
     assertSerializer(eaType, eaType.toObject())
   })
 
   it('signature', () => {
-    const eos = Eos()
-    const {types} = eos.fc
+    const snax = Snax()
+    const {types} = snax.fc
     const SignatureType = types.signature()
     const signatureString = 'SIG_K1_JwxtqesXpPdaZB9fdoVyzmbWkd8tuX742EQfnQNexTBfqryt2nn9PomT5xwsVnUB4m7KqTgTBQKYf2FTYbhkB5c7Kk9EsH'
     //const signatureString = 'SIG_K1_Jzdpi5RCzHLGsQbpGhndXBzcFs8vT5LHAtWLMxPzBdwRHSmJkcCdVu6oqPUQn1hbGUdErHvxtdSTS1YA73BThQFwV1v4G5'
@@ -100,33 +100,33 @@ describe('shorthand', () => {
 
 })
 
-describe('Eosio Abi', () => {
+describe('Snaxio Abi', () => {
 
   function checkContract(name) {
     it(`${name} contract parses`, (done) => {
-      const eos = Eos()
+      const snax = Snax()
 
-      eos.contract('eosio.token', (error, eosio_token) => {
+      snax.contract('snax.token', (error, snax_token) => {
         assert(!error, error)
-        assert(eosio_token.transfer, 'eosio.token contract')
-        assert(eosio_token.issue, 'eosio.token contract')
+        assert(snax_token.transfer, 'snax.token contract')
+        assert(snax_token.issue, 'snax.token contract')
         done()
       })
     })
   }
-  checkContract('eosio')
-  checkContract('eosio.token')
+  checkContract('snax')
+  checkContract('snax.token')
 
   it('abi', async () => {
-    const eos = Eos({defaults: true, broadcast: false, sign: false})
+    const snax = Snax({defaults: true, broadcast: false, sign: false})
 
-    const {abi_def} = eos.fc.structs
+    const {abi_def} = snax.fc.structs
 
     async function setabi(abi) {
-      await eos.setabi('inita', abi) // See README
-      const buf = eos.fc.toBuffer('abi_def', abi)
-      await eos.setabi('inita', buf) // v1/chain/abi_json_to_bin
-      await eos.setabi('inita', buf.toString('hex')) // v1/chain/abi_json_to_bin
+      await snax.setabi('inita', abi) // See README
+      const buf = snax.fc.toBuffer('abi_def', abi)
+      await snax.setabi('inita', buf) // v1/chain/abi_json_to_bin
+      await snax.setabi('inita', buf.toString('hex')) // v1/chain/abi_json_to_bin
     }
 
     const obj = abi_def.toObject()
@@ -142,15 +142,15 @@ describe('Eosio Abi', () => {
 
 describe('Action.data', () => {
   it('json', () => {
-    const eos = Eos({forceActionDataHex: false})
-    const {structs, types} = eos.fc
+    const snax = Snax({forceActionDataHex: false})
+    const {structs, types} = snax.fc
     const value = {
-      account: 'eosio.token',
+      account: 'snax.token',
       name: 'transfer',
       data: {
         from: 'inita',
         to: 'initb',
-        quantity: '1.0000 SYS',
+        quantity: '1.0000 SNAX',
         memo: ''
       },
       authorization: []
@@ -159,15 +159,15 @@ describe('Action.data', () => {
   })
 
   it('force hex', () => {
-    const eos = Eos({forceActionDataHex: true})
-    const {structs, types} = eos.fc
+    const snax = Snax({forceActionDataHex: true})
+    const {structs, types} = snax.fc
     const value = {
-      account: 'eosio.token',
+      account: 'snax.token',
       name: 'transfer',
       data: {
         from: 'inita',
         to: 'initb',
-        quantity: '1.0000 SYS',
+        quantity: '1.0000 SNAX',
         memo: ''
       },
       authorization: []
@@ -176,10 +176,10 @@ describe('Action.data', () => {
   })
 
   it('unknown action', () => {
-    const eos = Eos({forceActionDataHex: false})
-    const {structs, types} = eos.fc
+    const snax = Snax({forceActionDataHex: false})
+    const {structs, types} = snax.fc
     const value = {
-      account: 'eosio.token',
+      account: 'snax.token',
       name: 'mytype',
       data: '030a0b0c',
       authorization: []

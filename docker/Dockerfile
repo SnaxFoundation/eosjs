@@ -1,2 +1,2 @@
-FROM eosio/eos:v1.2.4
+FROM snax/snax:v1.2.4
 COPY config.ini /

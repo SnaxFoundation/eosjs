@@ -59,7 +59,7 @@ const charidx = ch => {
   return idx
 }
 
-/** Original Name encode and decode logic is in github.com/eosio/eos  native.hpp */
+/** Original Name encode and decode logic is in github.com/snax/snax  native.hpp */
 
 /**
   Encode a name (a base32 string) to a number.

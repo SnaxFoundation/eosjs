@@ -16,63 +16,63 @@ docker-compose logs -f | egrep -v 'Produced block 0' &
 sleep 2
 
 
-cleos wallet create --to-console
-cleos wallet import --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
+clisnax wallet create --to-console
+clisnax wallet import --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 
-# Create accounts must happen before eosio.system is installed
+# Create accounts must happen before snax.system is installed
 
-# Test accounts (for eosjs)
-cleos create account eosio inita $owner_pubkey $active_pubkey
-cleos create account eosio initb $owner_pubkey $active_pubkey
-cleos create account eosio initc $owner_pubkey $active_pubkey
+# Test accounts (for snaxjs)
+clisnax create account snax inita $owner_pubkey $active_pubkey
+clisnax create account snax initb $owner_pubkey $active_pubkey
+clisnax create account snax initc $owner_pubkey $active_pubkey
 
-# System accounts for Nodeosd
-cleos create account eosio eosio.bpay $owner_pubkey $active_pubkey
-cleos create account eosio eosio.msig $owner_pubkey $active_pubkey
-cleos create account eosio eosio.names $owner_pubkey $active_pubkey
-cleos create account eosio eosio.ram $owner_pubkey $active_pubkey
-cleos create account eosio eosio.ramfee $owner_pubkey $active_pubkey
-cleos create account eosio eosio.saving $owner_pubkey $active_pubkey
-cleos create account eosio eosio.stake $owner_pubkey $active_pubkey
-cleos create account eosio eosio.token $owner_pubkey $active_pubkey
-cleos create account eosio eosio.vpay $owner_pubkey $active_pubkey
+# System accounts for Nodsnaxd
+clisnax create account snax snax.bpay $owner_pubkey $active_pubkey
+clisnax create account snax snax.msig $owner_pubkey $active_pubkey
+clisnax create account snax snax.names $owner_pubkey $active_pubkey
+clisnax create account snax snax.ram $owner_pubkey $active_pubkey
+clisnax create account snax snax.ramfee $owner_pubkey $active_pubkey
+clisnax create account snax snax.saving $owner_pubkey $active_pubkey
+clisnax create account snax snax.stake $owner_pubkey $active_pubkey
+clisnax create account snax snax.token $owner_pubkey $active_pubkey
+clisnax create account snax snax.vpay $owner_pubkey $active_pubkey
 
-cleos set contract eosio.msig contracts/eosio.msig -p eosio.msig@active
+clisnax set contract snax.msig contracts/snax.msig -p snax.msig@active
 
-# Deploy, create and issue SYS token to eosio.token
-# cleos create account eosio eosio.token $owner_pubkey $active_pubkey
-cleos set contract eosio.token contracts/eosio.token -p eosio.token@active
-cleos push action eosio.token create\
-  '{"issuer":"eosio.token", "maximum_supply": "1000000000.0000 SYS"}' -p eosio.token@active
-cleos push action eosio.token issue\
-  '{"to":"eosio.token", "quantity": "10000.0000 SYS", "memo": "issue"}' -p eosio.token@active
+# Deploy, create and issue SNAX token to snax.token
+# clisnax create account snax snax.token $owner_pubkey $active_pubkey
+clisnax set contract snax.token contracts/snax.token -p snax.token@active
+clisnax push action snax.token create\
+  '{"issuer":"snax.token", "maximum_supply": "1000000000.0000 SNAX"}' -p snax.token@active
+clisnax push action snax.token issue\
+  '{"to":"snax.token", "quantity": "10000.0000 SNAX", "memo": "issue"}' -p snax.token@active
 
-# Either the eosio.bios or eosio.system contract may be deployed to the eosio
+# Either the snax.bios or snax.system contract may be deployed to the snax
 # account.  System contain everything bios has but adds additional constraints
 # such as ram and cpu limits.
-# eosio.* accounts  allowed only until eosio.system is deployed
-cleos set contract eosio contracts/eosio.bios -p eosio@active
+# snax.* accounts  allowed only until snax.system is deployed
+clisnax set contract snax contracts/snax.bios -p snax@active
 
-# SYS (main token)
-cleos transfer eosio.token eosio '1000 SYS'
-cleos transfer eosio.token inita '1000 SYS'
-cleos transfer eosio.token initb '1000 SYS'
-cleos transfer eosio.token initc '1000 SYS'
+# SNAX (main token)
+clisnax transfer snax.token snax '1000 SNAX'
+clisnax transfer snax.token inita '1000 SNAX'
+clisnax transfer snax.token initb '1000 SNAX'
+clisnax transfer snax.token initc '1000 SNAX'
 
 # User-issued asset
-cleos push action eosio.token create\
-  '{"issuer":"eosio.token", "maximum_supply": "1000000000.000 PHI"}' -p eosio.token@active
-cleos push action eosio.token issue\
-  '{"to":"eosio.token", "quantity": "10000.000 PHI", "memo": "issue"}' -p eosio.token@active
-cleos transfer eosio.token inita '100 PHI'
-cleos transfer eosio.token initb '100 PHI'
+clisnax push action snax.token create\
+  '{"issuer":"snax.token", "maximum_supply": "1000000000.000 PHI"}' -p snax.token@active
+clisnax push action snax.token issue\
+  '{"to":"snax.token", "quantity": "10000.000 PHI", "memo": "issue"}' -p snax.token@active
+clisnax transfer snax.token inita '100 PHI'
+clisnax transfer snax.token initb '100 PHI'
 
 # Custom asset
-cleos create account eosio currency $owner_pubkey $active_pubkey
-cleos set contract currency contracts/eosio.token -p currency@active
-cleos push action currency create\
+clisnax create account snax currency $owner_pubkey $active_pubkey
+clisnax set contract currency contracts/snax.token -p currency@active
+clisnax push action currency create\
   '{"issuer":"currency", "maximum_supply": "1000000000.0000 CUR"}' -p currency@active
-cleos push action currency issue '{"to":"currency", "quantity": "10000.0000 CUR", "memo": "issue"}' -p currency@active
+clisnax push action currency issue '{"to":"currency", "quantity": "10000.0000 CUR", "memo": "issue"}' -p currency@active
 
-cleos push action currency transfer\
+clisnax push action currency transfer\
   '{"from":"currency", "to": "inita", "quantity": "100.0000 CUR", "memo": "issue"}' -p currency

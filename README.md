@@ -1,33 +1,33 @@
-[![Build Status](https://travis-ci.org/EOSIO/eosjs.svg?branch=master)](https://travis-ci.org/EOSIO/eosjs)
-[![NPM](https://img.shields.io/npm/v/eosjs.svg)](https://www.npmjs.org/package/eosjs)
+[![Build Status](https://travis-ci.org/SNAX/snaxjs.svg?branch=master)](https://travis-ci.org/SNAX/snaxjs)
+[![NPM](https://img.shields.io/npm/v/snaxjs.svg)](https://www.npmjs.org/package/snaxjs)
 
-# Eosjs
+# Snaxjs
 
-General purpose library for EOSIO blockchains.
+General purpose library for SNAX blockchains.
 
 ### Versions
 
-| [EOSIO/eosjs](/EOSIO/eosjs) | [Npm](https://www.npmjs.com/package/eosjs) | [EOSIO/eos](https://github.com/EOSIO/eos) | [Docker Hub](https://hub.docker.com/r/eosio/eos/) |
+| [SNAX/snaxjs](/SNAX/snaxjs) | [Npm](https://www.npmjs.com/package/snaxjs) | [SNAX/snax](https://github.com/SNAX/snax) | [Docker Hub](https://hub.docker.com/r/snax/snax/) |
 | --- | --- | --- | --- |
-| tags: 16.0.0 - 16.0.8 | `npm install eosjs` | tags: v1.1.n - v1.2.4 | eosio/eos:v1.2.4 |
+| tags: 16.0.0 - 16.0.8 | `npm install snaxjs` | tags: v1.1.n - v1.2.4 | snax/snax:v1.2.4 |
 
 Prior [version](./docs/prior_versions.md) matrix.
 
 ### Usage
 
-* Install with: `npm install eosjs`
-* Html script tag, see [releases](https://github.com/EOSIO/eosjs/releases) for the correct **version** and its matching script **integrity** hash.
+* Install with: `npm install snaxjs`
+* Html script tag, see [releases](https://github.com/SNAX/snaxjs/releases) for the correct **version** and its matching script **integrity** hash.
 
 ```html
 <!--
-sha512-ZNj2roAUohp5a75xghMPchptWns6y6Gxj6x6C56f2CSVPcmUNzHWUIpbXHeXPj0rD3yRSDXeF22Brs11F8ESSw== lib/eos.js
-sha512-zhPSKFEBlDVvUzjl9aBS66cI8tDYoLetynuKvIekHT8NZZ12oxwcZ//M/eT/2Rb/pR/cjFvLD8104Cy//sdEnA== lib/eos.min.js
-sha512-VKOxq8R14PpPh4nbLvD8DtxxTv1UmZp7pb3+P8IOQ36m3PBJpm6cd8pI8WRI6d9/aozwADKb3HSFQ7A8s+OhSA== lib/eos.min.js.map
+sha512-ZNj2roAUohp5a75xghMPchptWns6y6Gxj6x6C56f2CSVPcmUNzHWUIpbXHeXPj0rD3yRSDXeF22Brs11F8ESSw== lib/snax.js
+sha512-zhPSKFEBlDVvUzjl9aBS66cI8tDYoLetynuKvIekHT8NZZ12oxwcZ//M/eT/2Rb/pR/cjFvLD8104Cy//sdEnA== lib/snax.min.js
+sha512-VKOxq8R14PpPh4nbLvD8DtxxTv1UmZp7pb3+P8IOQ36m3PBJpm6cd8pI8WRI6d9/aozwADKb3HSFQ7A8s+OhSA== lib/snax.min.js.map
 -->
 <html>
 <head>
   <meta charset="utf-8">
-  <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.8/lib/eos.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/snaxjs@16.0.8/lib/snax.min.js"
     integrity="sha512-zhPSKFEBlDVvUzjl9aBS66cI8tDYoLetynuKvIekHT8NZZ12oxwcZ//M/eT/2Rb/pR/cjFvLD8104Cy//sdEnA=="
     crossorigin="anonymous"></script>
 
@@ -40,9 +40,9 @@ sha512-VKOxq8R14PpPh4nbLvD8DtxxTv1UmZp7pb3+P8IOQ36m3PBJpm6cd8pI8WRI6d9/aozwADKb3
   }
 
   /**
-    Other httpEndpoint's: https://www.eosdocs.io/resources/apiendpoints
+    Other httpEndpoint's: https://www.snaxdocs.io/resources/apiendpoints
   */
-  eos = Eos({
+  snax = Snax({
     keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3',// private key
     httpEndpoint: 'http://127.0.0.1:8888',
     chainId: chain.sys,
@@ -54,7 +54,7 @@ sha512-VKOxq8R14PpPh4nbLvD8DtxxTv1UmZp7pb3+P8IOQ36m3PBJpm6cd8pI8WRI6d9/aozwADKb3
     @example updateProducerVote('myaccount', 'proxyaccount', ['respectedbp'])
   */
   async function updateProducerVote(voter, proxy = '', producers = []) {
-    return eos.voteproducer(voter, proxy, producers)
+    return snax.voteproducer(voter, proxy, producers)
   }
 
   </script>
@@ -64,39 +64,39 @@ sha512-VKOxq8R14PpPh4nbLvD8DtxxTv1UmZp7pb3+P8IOQ36m3PBJpm6cd8pI8WRI6d9/aozwADKb3
 
 ### Usage
 
-Ways to instantiate eosjs.
+Ways to instantiate snaxjs.
 
 ```js
-Eos = require('eosjs')
+Snax = require('snaxjs')
 
 // Private key or keys (array) provided statically or by way of a function.
 // For multiple keys, the get_required_keys API is used (more on that below).
 keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
 
 // Localhost Testnet (run ./docker/up.sh)
-eos = Eos({keyProvider})
+snax = Snax({keyProvider})
 
 // Connect to a testnet or mainnet
-eos = Eos({httpEndpoint, chainId, keyProvider})
+snax = Snax({httpEndpoint, chainId, keyProvider})
 
 // Cold-storage
-eos = Eos({httpEndpoint: null, chainId, keyProvider})
+snax = Snax({httpEndpoint: null, chainId, keyProvider})
 
-// Add support for non-EOS public key prefixes, such as PUB, etc
-eos = Eos({keyPrefix: 'PUB'})
+// Add support for non-SNAX public key prefixes, such as PUB, etc
+snax = Snax({keyPrefix: 'PUB'})
 
-// Read-only instance when 'eosjs' is already a dependency
-eos = Eos.modules.api({/*config*/})
+// Read-only instance when 'snaxjs' is already a dependency
+snax = Snax.modules.api({/*config*/})
 
 // Read-only instance when an application never needs to write (smaller library)
-EosApi = require('eosjs-api')
-eos = EosApi({/*config*/})
+SnaxApi = require('snaxjs-api')
+snax = SnaxApi({/*config*/})
 ```
 
 No-arguments prints usage.
 
 ```js
-eos.getBlock()
+snax.getBlock()
 ```
 ```json
 USAGE
@@ -108,7 +108,7 @@ PARAMETERS
 }
 ```
 
-Start a nodeosd process.  The docker in this repository provides a setup
+Start a snaxnoded process.  The docker in this repository provides a setup
 that supports the examples in this README.
 
 ```bash
@@ -119,29 +119,29 @@ All blockchain functions (read and write) follow this pattern:
 
 ```js
 // If the last argument is a function it is treated as a callback
-eos.getBlock(1, (error, result) => {})
+snax.getBlock(1, (error, result) => {})
 
 // If a callback is not provided, a Promise is returned
-eos.getBlock(1) // @returns {Promise}
+snax.getBlock(1) // @returns {Promise}
 
 // Parameters can be positional or an object
-eos.getBlock({block_num_or_id: 1})
+snax.getBlock({block_num_or_id: 1})
 
 // An API with no parameters is invoked with an empty object or callback (avoids logging usage)
-eos.getInfo({}) // @returns {Promise}
-eos.getInfo((error, result) => { console.log(error, result) })
+snax.getInfo({}) // @returns {Promise}
+snax.getInfo((error, result) => { console.log(error, result) })
 ```
 
 ### API Documentation
 
-Chain and history API functions are available after creating the `eos` object.
+Chain and history API functions are available after creating the `snax` object.
 
-* [API](https://github.com/EOSIO/eosjs-api/blob/master/docs/api.md#eos--object)
+* [API](https://github.com/SNAX/snaxjs-api/blob/master/docs/api.md#snax--object)
 
 ### Configuration
 
 ```js
-Eos = require('eosjs')
+Snax = require('snaxjs')
 
 // Default configuration
 config = {
@@ -154,7 +154,7 @@ config = {
   sign: true
 }
 
-eos = Eos(config)
+snax = Snax(config)
 ```
 
 * **chainId** `hex` - Unique ID for the blockchain you're connecting to.  This
@@ -173,17 +173,17 @@ eos = Eos(config)
   If a keyProvider is not provided here, one may be provided on a per-action
   or per-transaction basis in [Options](#options).
 
-* **keyPrefix** `[string='EOS']` - Change the public key prefix.
+* **keyPrefix** `[string='SNAX']` - Change the public key prefix.
 
-* **httpEndpoint** `string` - http or https location of a nodeosd server
-  providing a chain API.  When using eosjs from a browser remember to configure
-  the same origin policy in nodeosd or proxy server.  For testing, nodeosd
+* **httpEndpoint** `string` - http or https location of a snaxnoded server
+  providing a chain API.  When using snaxjs from a browser remember to configure
+  the same origin policy in snaxnoded or proxy server.  For testing, snaxnoded
   configuration `access-control-allow-origin = *` could be used.
 
   Set this value to **null** for a cold-storage (no network) configuration.
 
 * **expireInSeconds** `number` - number of seconds before the transaction
-  will expire.  The time is based on the nodeosd's clock.  An unexpired
+  will expire.  The time is based on the snaxnoded's clock.  An unexpired
   transaction that may have had an error is a liability until the expiration
   is reached, this time should be brief.
 
@@ -204,9 +204,9 @@ eos = Eos(config)
   * `null|undefined` - broadcast as usual
 
 * **transactionHeaders** (advanced) - manually calculate transaction header.  This
-  may be provided so eosjs does not need to make header related API calls to
-  nodeos.  Used in environments like cold-storage.  This callback is called for
-  every transaction. Headers are documented here [eosjs-api#headers](https://github.com/EOSIO/eosjs-api/blob/HEAD/docs/index.md#headers--object).
+  may be provided so snaxjs does not need to make header related API calls to
+  snaxnode.  Used in environments like cold-storage.  This callback is called for
+  every transaction. Headers are documented here [snaxjs-api#headers](https://github.com/SNAX/snaxjs-api/blob/HEAD/docs/index.md#headers--object).
   * `transactionHeaders: (expireInSeconds, callback) => {callback(null/*error*/, headers)}`
 
 * **logger** - default logging configuration.
@@ -219,7 +219,7 @@ eos = Eos(config)
 
   For example, redirect error logs: `config.logger = {error: (...args) => ..}`
 
-* **authorization** - replace the default eosjs authorization on actions.  An
+* **authorization** - replace the default snaxjs authorization on actions.  An
   authorization provided here may still be over-written by specifying an
   authorization for each individual action.
 
@@ -233,7 +233,7 @@ eos = Eos(config)
 
 Options may be provided after parameters.
 
-NOTE: `authorization` is for individual actions, it does not belong in `Eos(config)`.
+NOTE: `authorization` is for individual actions, it does not belong in `Snax(config)`.
 
 ```js
 options = {
@@ -244,7 +244,7 @@ options = {
 ```
 
 ```js
-eos.transfer('alice', 'bob', '1.0000 SYS', '', options)
+snax.transfer('alice', 'bob', '1.0000 SNAX', '', options)
 ```
 
 * **authorization** `[array<auth>|auth]` - identifies the
@@ -270,11 +270,11 @@ eos.transfer('alice', 'bob', '1.0000 SYS', '', options)
   transaction.
 
   ```js
-  await eos.anyAction('args', {keyProvider})
+  await snax.anyAction('args', {keyProvider})
   ```
 
   ```js
-  await eos.transaction(tr => { tr.anyAction() }, {keyProvider})
+  await snax.transaction(tr => { tr.anyAction() }, {keyProvider})
   ```
 
 ### Transaction
@@ -297,13 +297,13 @@ Create and send (broadcast) a transaction:
 
 ```javascript
 /** @return {Promise} */
-eos.transaction(
+snax.transaction(
   {
     // ...headers,
     // context_free_actions: [],
     actions: [
       {
-        account: 'eosio.token',
+        account: 'snax.token',
         name: 'transfer',
         authorization: [{
           actor: 'inita',
@@ -312,7 +312,7 @@ eos.transaction(
         data: {
           from: 'inita',
           to: 'initb',
-          quantity: '7.0000 SYS',
+          quantity: '7.0000 SNAX',
           memo: ''
         }
       }
@@ -329,51 +329,51 @@ more frequently.  This avoids having lots of JSON in the code.
 
 ```javascript
 // Run with no arguments to print usage.
-eos.transfer()
+snax.transfer()
 
 // Callback is last, when omitted a promise is returned
-eos.transfer('inita', 'initb', '1.0000 SYS', '', (error, result) => {})
-eos.transfer('inita', 'initb', '1.1000 SYS', '') // @returns {Promise}
+snax.transfer('inita', 'initb', '1.0000 SNAX', '', (error, result) => {})
+snax.transfer('inita', 'initb', '1.1000 SNAX', '') // @returns {Promise}
 
 // positional parameters
-eos.transfer('inita', 'initb', '1.2000 SYS', '')
+snax.transfer('inita', 'initb', '1.2000 SNAX', '')
 
 // named parameters
-eos.transfer({from: 'inita', to: 'initb', quantity: '1.3000 SYS', memo: ''})
+snax.transfer({from: 'inita', to: 'initb', quantity: '1.3000 SNAX', memo: ''})
 
 // options appear after parameters
 options = {broadcast: true, sign: true}
 
 // `false` is a shortcut for {broadcast: false}
-eos.transfer('inita', 'initb', '1.4000 SYS', '', false)
+snax.transfer('inita', 'initb', '1.4000 SNAX', '', false)
 ```
 
-Read-write API methods and documentation are generated from the eosio
-[token](https://github.com/EOSIO/eosjs/blob/master/src/schema/eosio_token.json) and
-[system](https://github.com/EOSIO/eosjs/blob/master/src/schema/eosio_system.json).
+Read-write API methods and documentation are generated from the snax
+[token](https://github.com/SNAX/snaxjs/blob/master/src/schema/snax_token.json) and
+[system](https://github.com/SNAX/snaxjs/blob/master/src/schema/snax_system.json).
 
 Assets amounts require zero padding.  For a better user-experience, if you know
 the correct precision you may use DecimalPad to add the padding.
 
 ```js
-DecimalPad = Eos.modules.format.DecimalPad
+DecimalPad = Snax.modules.format.DecimalPad
 userInput = '10.2'
 precision = 4
 assert.equal('10.2000', DecimalPad(userInput, precision))
 ```
 
 For more advanced signing, see `keyProvider` and `signProvider` in
-[index.test.js](https://github.com/EOSIO/eosjs/blob/master/src/index.test.js).
+[index.test.js](https://github.com/SNAX/snaxjs/blob/master/src/index.test.js).
 
 ### Shorthand
 
 Shorthand is available for some types such as Asset and Authority.  This syntax
 is only for concise functions and does not work when providing entire transaction
-objects to `eos.transaction`..
+objects to `snax.transaction`..
 
 For example:
 * permission `inita` defaults `inita@active`
-* authority `'EOS6MRy..'` expands `{threshold: 1, keys: [{key: 'EOS6MRy..', weight: 1}]}`
+* authority `'SNAX6MRy..'` expands `{threshold: 1, keys: [{key: 'SNAX6MRy..', weight: 1}]}`
 * authority `inita` expands `{threshold: 1, accounts: [{permission: {actor: 'inita', permission: 'active'}, weight: 1}]}`
 
 ### New Account
@@ -382,27 +382,27 @@ New accounts will likely require some staked tokens for RAM and bandwidth.
 
 ```javascript
 wif = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-pubkey = 'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
+pubkey = 'SNAX6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV'
 
-eos.transaction(tr => {
+snax.transaction(tr => {
   tr.newaccount({
-    creator: 'eosio',
+    creator: 'snax',
     name: 'myaccount',
     owner: pubkey,
     active: pubkey
   })
 
   tr.buyrambytes({
-    payer: 'eosio',
+    payer: 'snax',
     receiver: 'myaccount',
     bytes: 8192
   })
 
   tr.delegatebw({
-    from: 'eosio',
+    from: 'snax',
     receiver: 'myaccount',
-    stake_net_quantity: '10.0000 SYS',
-    stake_cpu_quantity: '10.0000 SYS',
+    stake_net_quantity: '10.0000 SNAX',
+    stake_cpu_quantity: '10.0000 SNAX',
     transfer: 0
   })
 })
@@ -418,7 +418,7 @@ If you're loading a **wasm** file, you do not need binaryen. If you're loading
 a **wast** file you can include and configure the binaryen compiler, this is
 used to compile to **wasm** automatically when calling **setcode**.
 
-Versions of binaryen may be [problematic](https://github.com/EOSIO/eos/issues/2187).
+Versions of binaryen may be [problematic](https://github.com/SNAX/snax/issues/2187).
 
 ```bash
 $ npm install binaryen@37.0.0
@@ -426,34 +426,34 @@ $ npm install binaryen@37.0.0
 
 ```js
 binaryen = require('binaryen')
-eos = Eos({keyProvider, binaryen})
+snax = Snax({keyProvider, binaryen})
 ```
 
 #### Deploy
 
 ```javascript
-wasm = fs.readFileSync(`docker/contracts/eosio.token/eosio.token.wasm`)
-abi = fs.readFileSync(`docker/contracts/eosio.token/eosio.token.abi`)
+wasm = fs.readFileSync(`docker/contracts/snax.token/snax.token.wasm`)
+abi = fs.readFileSync(`docker/contracts/snax.token/snax.token.abi`)
 
 // Publish contract to the blockchain
-eos.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
-eos.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
+snax.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
+snax.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
 ```
 
 #### Fetch a smart contract
 
 ```js
 // @returns {Promise}
-eos.contract('myaccount', [options], [callback])
+snax.contract('myaccount', [options], [callback])
 
 // Run immediately, `myaction` returns a Promise
-eos.contract('myaccount').then(myaccount => myaccount.myaction(..))
+snax.contract('myaccount').then(myaccount => myaccount.myaction(..))
 
 // Group actions. `transaction` returns a Promise but `myaction` does not
-eos.transaction('myaccount', myaccount => { myaccount.myaction(..) })
+snax.transaction('myaccount', myaccount => { myaccount.myaction(..) })
 
 // Transaction with multiple contracts
-eos.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
+snax.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
    myaccount.myaction(..)
    myaccount2.myaction(..)
 })
@@ -462,13 +462,13 @@ eos.transaction(['myaccount', 'myaccount2'], ({myaccount, myaccount2}) => {
 #### Offline or cold-storage contract
 
 ```js
-eos = Eos({httpEndpoint: null})
+snax = Snax({httpEndpoint: null})
 
-abi = fs.readFileSync(`docker/contracts/eosio.token/eosio.token.abi`)
-eos.fc.abiCache.abi('myaccount', JSON.parse(abi))
+abi = fs.readFileSync(`docker/contracts/snax.token/snax.token.abi`)
+snax.fc.abiCache.abi('myaccount', JSON.parse(abi))
 
 // Check that the ABI is available (print usage)
-eos.contract('myaccount').then(myaccount => myaccount.create())
+snax.contract('myaccount').then(myaccount => myaccount.create())
 ```
 #### Offline or cold-storage transaction
 
@@ -478,14 +478,14 @@ eos.contract('myaccount').then(myaccount => myaccount.create())
 // Prepare headers
 expireInSeconds = 60 * 60 // 1 hour
 
-eos = Eos(/* {httpEndpoint: 'https://..'} */)
+snax = Snax(/* {httpEndpoint: 'https://..'} */)
 
-info = await eos.getInfo({})
+info = await snax.getInfo({})
 chainDate = new Date(info.head_block_time + 'Z')
 expiration = new Date(chainDate.getTime() + expireInSeconds * 1000)
 expiration = expiration.toISOString().split('.')[0]
 
-block = await eos.getBlock(info.last_irreversible_block_num)
+block = await snax.getBlock(info.last_irreversible_block_num)
 
 transactionHeaders = {
   expiration,
@@ -496,21 +496,21 @@ transactionHeaders = {
 // OFFLINE (bring `transactionHeaders`)
 
 // All keys in keyProvider will sign.
-eos = Eos({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
+snax = Snax({httpEndpoint: null, chainId, keyProvider, transactionHeaders})
 
-transfer = await eos.transfer('inita', 'initb', '1.0000 SYS', '')
+transfer = await snax.transfer('inita', 'initb', '1.0000 SNAX', '')
 transferTransaction = transfer.transaction
 
 // ONLINE (bring `transferTransaction`)
 
-eos = Eos(/* {httpEndpoint: 'https://..'} */)
+snax = Snax(/* {httpEndpoint: 'https://..'} */)
 
-processedTransaction = await eos.pushTransaction(transferTransaction)
+processedTransaction = await snax.pushTransaction(transferTransaction)
 
-// cleos version:
-const cleosTransaction = transferTransaction.transaction
-cleosTransaction.signatures = transferTransaction.signatures
-// `cloes push transaction ${JSON.stringify(cleosTransaction)}`
+// clisnax version:
+const clisnaxTransaction = transferTransaction.transaction
+clisnaxTransaction.signatures = transferTransaction.signatures
+// `cloes push transaction ${JSON.stringify(clisnaxTransaction)}`
 ```
 
 #### Custom Token
@@ -518,7 +518,7 @@ cleosTransaction.signatures = transferTransaction.signatures
 ```js
 // more on the contract / transaction syntax
 
-await eos.transaction('myaccount', myaccount => {
+await snax.transaction('myaccount', myaccount => {
 
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
@@ -528,7 +528,7 @@ await eos.transaction('myaccount', myaccount => {
   myaccount.issue('myaccount', '10000.000 PHI', 'issue')
 })
 
-const balance = await eos.getCurrencyBalance('myaccount', 'myaccount', 'PHI')
+const balance = await snax.getCurrencyBalance('myaccount', 'myaccount', 'PHI')
 console.log('Currency Balance', balance)
 ```
 
@@ -538,10 +538,10 @@ Other ways to use contracts and transactions.
 
 ```javascript
 // if either transfer fails, both will fail (1 transaction, 2 messages)
-await eos.transaction(eos =>
+await snax.transaction(snax =>
   {
-    eos.transfer('inita', 'initb', '1.0000 SYS', ''/*memo*/)
-    eos.transfer('inita', 'initc', '1.0000 SYS', ''/*memo*/)
+    snax.transfer('inita', 'initb', '1.0000 SNAX', ''/*memo*/)
+    snax.transfer('inita', 'initc', '1.0000 SNAX', ''/*memo*/)
     // Returning a promise is optional (but handled as expected)
   }
   // [options],
@@ -549,19 +549,19 @@ await eos.transaction(eos =>
 )
 
 // transaction on a single contract
-await eos.transaction('myaccount', myaccount => {
+await snax.transaction('myaccount', myaccount => {
   myaccount.transfer('myaccount', 'inita', '10.000 PHI', '')
 })
 
 // mix contracts in the same transaction
-await eos.transaction(['myaccount', 'eosio.token'], ({myaccount, eosio_token}) => {
+await snax.transaction(['myaccount', 'snax.token'], ({myaccount, snax_token}) => {
   myaccount.transfer('inita', 'initb', '1.000 PHI', '')
-  eosio_token.transfer('inita', 'initb', '1.0000 SYS', '')
+  snax_token.transfer('inita', 'initb', '1.0000 SNAX', '')
 })
 
 // The contract method does not take an array so must be called once for
 // each contract that is needed.
-const myaccount = await eos.contract('myaccount')
+const myaccount = await snax.contract('myaccount')
 await myaccount.transfer('myaccount', 'inita', '1.000 PHI', '')
 
 // a transaction to a contract instance can specify multiple actions
@@ -573,8 +573,8 @@ await myaccount.transaction(myaccountTr => {
 
 # Development
 
-From time-to-time the eosjs and nodeos binary format will change between releases
-so you may need to start `nodeos` with the `--skip-transaction-signatures` parameter
+From time-to-time the snaxjs and snaxnode binary format will change between releases
+so you may need to start `snaxnode` with the `--skip-transaction-signatures` parameter
 to get your transactions to pass.
 
 Note, `package.json` has a "main" pointing to `./lib`.  The `./lib` folder is for
@@ -582,29 +582,29 @@ es2015 code built in a separate step. If you're changing and testing code,
 import from `./src` instead.
 
 ```javascript
-Eos = require('./src')
+Snax = require('./src')
 
 // forceActionDataHex = false helps transaction readability but may trigger back-end bugs
 config = {verbose: true, debug: false, broadcast: true, forceActionDataHex: true, keyProvider}
 
-eos = Eos(config)
+snax = Snax(config)
 ```
 
 #### Fcbuffer
 
-The `eos` instance can provide serialization:
+The `snax` instance can provide serialization:
 
 ```javascript
 // 'asset' is a type but could be any struct or type like: transaction or uint8
 type = {type: 1, data: '00ff'}
-buffer = eos.fc.toBuffer('extensions_type', type)
-assert.deepEqual(type, eos.fc.fromBuffer('extensions_type', buffer))
+buffer = snax.fc.toBuffer('extensions_type', type)
+assert.deepEqual(type, snax.fc.fromBuffer('extensions_type', buffer))
 
 // ABI Serialization
-eos.contract('eosio.token', (error, eosio_token) => {
-  create = {issuer: 'inita', maximum_supply: '1.0000 SYS'}
-  buffer = eosio_token.fc.toBuffer('create', create)
-  assert.deepEqual(create, eosio_token.fc.fromBuffer('create', buffer))
+snax.contract('snax.token', (error, snax_token) => {
+  create = {issuer: 'inita', maximum_supply: '1.0000 SNAX'}
+  buffer = snax_token.fc.toBuffer('create', create)
+  assert.deepEqual(create, snax_token.fc.fromBuffer('create', buffer))
 })
 ```
 
@@ -612,35 +612,35 @@ Use Node v10+ for `package-lock.json`.
 
 # Related Libraries
 
-These libraries are integrated into `eosjs` seamlessly so you probably do not
+These libraries are integrated into `snaxjs` seamlessly so you probably do not
 need to use them directly.  They are exported here giving more API access or
 in some cases may be used standalone.
 
 ```javascript
-var {format, api, ecc, json, Fcbuffer} = Eos.modules
+var {format, api, ecc, json, Fcbuffer} = Snax.modules
 ```
 * format [./format.md](./docs/format.md)
   * Blockchain name validation
   * Asset string formatting
 
-* eosjs-api [[Github](https://github.com/eosio/eosjs-api), [NPM](https://www.npmjs.org/package/eosjs-api)]
-  * Remote API to an EOS blockchain node (nodeos)
+* snaxjs-api [[Github](https://github.com/snax/snaxjs-api), [NPM](https://www.npmjs.org/package/snaxjs-api)]
+  * Remote API to an SNAX blockchain node (snaxnode)
   * Use this library directly if you need read-only access to the blockchain
     (don't need to sign transactions).
 
-* eosjs-ecc [[Github](https://github.com/eosio/eosjs-ecc), [NPM](https://www.npmjs.org/package/eosjs-ecc)]
+* snaxjs-ecc [[Github](https://github.com/snax/snaxjs-ecc), [NPM](https://www.npmjs.org/package/snaxjs-ecc)]
   * Private Key, Public Key, Signature, AES, Encryption / Decryption
   * Validate public or private keys
-  * Encrypt or decrypt with EOS compatible checksums
+  * Encrypt or decrypt with SNAX compatible checksums
   * Calculate a shared secret
 
-* json {[api](https://github.com/EOSIO/eosjs-api/blob/master/src/api), [schema](https://github.com/EOSIO/eosjs/blob/master/src/schema)},
+* json {[api](https://github.com/SNAX/snaxjs-api/blob/master/src/api), [schema](https://github.com/SNAX/snaxjs/blob/master/src/schema)},
   * Blockchain definitions (api method names, blockchain schema)
 
-* eosjs-keygen [[Github](https://github.com/eosio/eosjs-keygen), [NPM](https://www.npmjs.org/package/eosjs-keygen)]
+* snaxjs-keygen [[Github](https://github.com/snax/snaxjs-keygen), [NPM](https://www.npmjs.org/package/snaxjs-keygen)]
   * private key storage and key management
 
-* Fcbuffer [[Github](https://github.com/eosio/eosjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
+* Fcbuffer [[Github](https://github.com/snax/snaxjs-fcbuffer), [NPM](https://www.npmjs.org/package/fcbuffer)]
   * Binary serialization used by the blockchain
   * Clients sign the binary form of the transaction
   * Allows client to know what it is signing
